@@ -1,20 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import React from 'react';
+import {useSelector} from "react-redux";
 
 const ProfilePage = () => {
-  const nav = useNavigate();
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      axios.get('https://api.react-learning.ru/v2/sm8/users/me')
-        .then(r => setUser(r.data))
-        .catch(err => nav('/signIn'));
-    } else {
-      nav('/signIn');
-    }
-  }, []);
-
+  const {user} = useSelector(state => state.auth);
   return (
     <div className={'m-4'}>
       <div className={'flex bg-neutral-800 p-4'}>
