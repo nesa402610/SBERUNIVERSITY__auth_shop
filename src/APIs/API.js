@@ -15,6 +15,25 @@ class API {
     return axios.get(this.baseUrl + '/products');
   }
 
+  async uploadProduct(options) {
+    return await axios.post(this.baseUrl + '/products', options);
+  }
+
+  async likeProduct(_id) {
+    return await axios.put(this.baseUrl + 'products/likes/' + _id);
+  }
+
+  async dislikeProduct(_id) {
+    return await axios.delete(this.baseUrl + 'products/likes/' + _id);
+  }
+
+  async addReview(_id) {
+    return await axios.delete(this.baseUrl + 'review/' + _id);
+  }
+
+  async removeReview(_id) {
+    return await axios.delete(this.baseUrl + 'review/' + _id);
+  }
 
   getUserData() {
     return axios.get(this.baseUrl + '/v2/' + this.groupId + '/users/me');
