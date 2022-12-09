@@ -1,20 +1,16 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useState} from 'react';
+import ProfileInfo from "../components /ProfileInfo";
+import ProfileEdit from "../components /ProfileEdit";
+
 
 const ProfilePage = () => {
-  const {user} = useSelector(state => state.auth);
+  const [isEdit, setIsEdit] = useState(false);
   return (
     <div className={'m-4'}>
-      <div className={'flex bg-neutral-800 p-4'}>
-        <div className={'flex gap-8'}>
-          <img width={'200px'} src={user.avatar} alt=""/>
-          <div className={'flex flex-col'}>
-            <span>{user.name}</span>
-            <span>{user.about}</span>
-            <span>{user.email}</span>
-          </div>
-        </div>
-      </div>
+      {isEdit ?
+        <ProfileEdit isEdit={isEdit} setIsEdit={setIsEdit}/>
+        : <ProfileInfo isEdit={isEdit} setIsEdit={setIsEdit}/>
+      }
     </div>
   );
 };

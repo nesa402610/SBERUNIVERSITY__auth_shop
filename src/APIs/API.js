@@ -39,6 +39,10 @@ class API {
     return axios.get(this.baseUrl + '/v2/' + this.groupId + '/users/me');
   }
 
+  async updateUserData(data) {
+    return await axios.patch(this.baseUrl + '/v2/' + this.groupId + '/users/me', data);
+  }
+
 // другие методы работы с API
 }
 
