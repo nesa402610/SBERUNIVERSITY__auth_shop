@@ -2,11 +2,11 @@ import React from 'react';
 import {useSelector} from "react-redux";
 
 const HomePage = () => {
-  const {products} = useSelector(state => state.products)
+  const {filteredProducts} = useSelector(state => state.products)
   return (
     <div className={'m-4'}>
       <div className={'grid grid-cols-5 gap-4'}>
-        {products.map(item =>
+        {filteredProducts.map(item =>
           <div key={item._id} className={'relative bg-neutral-800 p-4 flex flex-col gap-2'}>
             <img src={item.pictures} alt=""/>
             {item.discount > 0 &&
