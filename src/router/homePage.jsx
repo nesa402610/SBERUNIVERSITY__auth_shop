@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 
 const HomePage = () => {
-  const {filteredProducts} = useSelector(state => state.products)
+  const {filteredProducts} = useSelector(state => state.products);
   return (
     <div className={'m-4'}>
       <div className={'grid grid-cols-5 gap-4'}>
@@ -13,9 +13,10 @@ const HomePage = () => {
               <span className={'absolute top-0 left-0 bg-red-900 text-center p-1 min-w-[40px]'}>{item.discount}</span>
             }
             {item.tags.map((t) => (
-              t === 'new' && <span key={t} className={'absolute top-0 right-0 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
+                t === 'new' &&
+                <span key={t} className={'absolute top-0 right-0 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
               )
-              )}
+            )}
             <div className={'flex-1 flex flex-col justify-between gap-2'}>
               <div className="flex flex-col">
                 <div className={'flex gap-2'}>
@@ -32,6 +33,7 @@ const HomePage = () => {
           </div>
         )}
       </div>
+        {filteredProducts.length === 0 && <h2 className={'text-center text-2xl font-bold'}>По вашему запросу ничего не найдено..</h2>}
     </div>
   );
 };
