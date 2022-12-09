@@ -6,7 +6,7 @@ import {updateUserData} from "../store/reducers/authSlice";
 const ProfileEdit = ({setIsEdit}) => {
   const {user} = useSelector(state => state.auth);
   const [data, setData] = useState({
-    // avatar: user.avatar,
+    avatar: user.avatar,
     name: user.name,
     about: user.about,
     // email: user.email
@@ -15,7 +15,12 @@ const ProfileEdit = ({setIsEdit}) => {
 
   const updateProfileHandler = (e) => {
     e.preventDefault();
-    api.updateUserData(data).then((r) => {
+    if (data.avatar !== user.avatar) {
+      api.updateUserAvatar({avatar: data.avatar})
+        .then(r => dispatch(updateUserData(r.data)));
+    }
+    const {avatar, ...datas} = data;
+    api.updateUserData(datas).then((r) => {
       dispatch(updateUserData(r.data));
       setIsEdit(false);
     });
@@ -24,11 +29,13 @@ const ProfileEdit = ({setIsEdit}) => {
   return (
     <div className={'flex bg-neutral-800 p-4 justify-between'}>
       <div className={'flex gap-8'}>
-        <label className={'relative hover:cursor-pointera hover:scale-105a transition-all'}>
+        <div className="flex flex-col gap-2">
           <img width={'200px'} src={user.avatar} alt=""/>
-          {/*<span className={'absolute bottom-0 left-1/2 -translate-x-1/2 bg-neutral-700 p-4'}>Изменить</span>*/}
-          {/*<input type="file" onChange={e => setData({...data, avatar: e.target.files[0]})} hidden/>*/}
-        </label>
+          <input placeholder={'Ссылка на аватар'}
+                 className={'bg-neutral-700'}
+                 type="text"
+                 onChange={e => setData({...data, avatar: e.target.value})}/>
+        </div>
         <div className={'flex flex-col gap-2'}>
           <input className={'bg-neutral-700 px-4 focus-within:outline outline-1 outline-neutral-400'}
                  type="text"
@@ -50,7 +57,7 @@ const ProfileEdit = ({setIsEdit}) => {
       </div>
       <div className={'flex flex-col gap-2'}>
         <button onClick={(e) => updateProfileHandler(e)} className={'bg-green-800 px-4 py-2'}>Сохранить</button>
-        <button onClick={()=>setIsEdit(false)} className={'bg-red-800 px-4 py-2'}>Отмена</button>
+        <button onClick={() => setIsEdit(false)} className={'bg-red-800 px-4 py-2'}>Отмена</button>
       </div>
     </div>
   );

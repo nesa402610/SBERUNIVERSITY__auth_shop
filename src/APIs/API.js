@@ -42,6 +42,9 @@ class API {
   async updateUserData(data) {
     return await axios.patch(this.baseUrl + '/v2/' + this.groupId + '/users/me', data);
   }
+  async updateUserAvatar(data) {
+    return await axios.patch(this.baseUrl + '/v2/' + this.groupId + '/users/me/avatar', data);
+  }
 
 // другие методы работы с API
 }
