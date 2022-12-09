@@ -1,12 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
+import React from 'react';
+import {useSelector} from "react-redux";
 
 const HomePage = () => {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    axios.get('https://api.react-learning.ru/products')
-      .then(r => setProducts(r.data.products));
-  }, []);
+  const {products} = useSelector(state => state.products)
   return (
     <div className={'m-4'}>
       <div className={'grid grid-cols-5 gap-4'}>
@@ -17,7 +13,7 @@ const HomePage = () => {
               <span className={'absolute top-0 left-0 bg-red-900 text-center p-1 min-w-[40px]'}>{item.discount}</span>
             }
             {item.tags.map((t) => (
-              t === 'new' && <span className={'absolute top-0 right-0 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
+              t === 'new' && <span key={t} className={'absolute top-0 right-0 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
               )
               )}
             <div className={'flex-1 flex flex-col justify-between gap-2'}>
@@ -27,7 +23,6 @@ const HomePage = () => {
                   {item.discount > 0 &&
                     <span className={'order-1 text-red-500 font-bold'}>{item.price * (100 - item.discount) / 100} рублей</span>
                   }
-
                 </div>
                 <span>{item.stock} шт.</span>
                 <span>{item.name}</span>
