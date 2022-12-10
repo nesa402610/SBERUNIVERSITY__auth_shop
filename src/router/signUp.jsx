@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -49,7 +50,7 @@ const SignUp = () => {
           {/*TODO*/}
           <div className={'flex justify-between text-sm'}>
             <span className={'cursor-pointer hover:text-neutral-300 transition-all'}>Забыли пароль?</span>
-            <span className={'cursor-pointer hover:text-neutral-300 transition-all'}>Войти в аккаунт</span>
+            <Link to={'/signIn'} className={'cursor-pointer hover:text-neutral-300 transition-all'}>Войти в аккаунт</Link>
           </div>
           <button className={'bg-neutral-900 p-2 mt-2 hover:bg-neutral-800 transition-all'}
                   onClick={e => signUpHandler(e)}>
