@@ -15,6 +15,10 @@ class API {
     return axios.get(this.baseUrl + '/products');
   }
 
+  getPosts() {
+    return axios.get(this.baseUrl + '/v2/' + this.groupId + '/posts');
+  }
+
   async uploadProduct(options) {
     return await axios.post(this.baseUrl + '/products', options);
   }
@@ -42,6 +46,7 @@ class API {
   async updateUserData(data) {
     return await axios.patch(this.baseUrl + '/v2/' + this.groupId + '/users/me', data);
   }
+
   async updateUserAvatar(data) {
     return await axios.patch(this.baseUrl + '/v2/' + this.groupId + '/users/me/avatar', data);
   }
