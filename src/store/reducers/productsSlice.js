@@ -3,7 +3,6 @@ import {fetchProducts} from "../actions/fetchProducts";
 
 const initialState = {
   products: [],
-  filteredProducts: [],
   searchText: null,
   isLoading: false,
   error: null
@@ -13,9 +12,9 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    filterProducts(state, action) {
-      state.filteredProducts = state.products.filter(p => p.name.toLowerCase().includes((action.payload).toLowerCase()));
-    },
+    setSearch(state, action) {
+      state.searchText = action.payload
+    }
   },
   extraReducers: {
     [fetchProducts.fulfilled.type]: (state, action) => {
@@ -34,4 +33,4 @@ const productsSlice = createSlice({
 });
 
 export default productsSlice.reducer;
-export const {filterProducts} = productsSlice.actions;
+export const {filterProducts, setSearch} = productsSlice.actions;

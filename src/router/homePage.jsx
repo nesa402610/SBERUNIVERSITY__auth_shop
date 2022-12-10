@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useSelector} from "react-redux";
 
 const HomePage = () => {
-  const {filteredProducts} = useSelector(state => state.products);
+  const {products, searchText} = useSelector(state => state.products);
+
+  const filteredProducts = useMemo(() => {
+    if (searchText) return products.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()));
+    else return products;
+  }, [products, searchText]);
+
   return (
     <div className={'m-4'}>
       <div className={'grid grid-cols-5 gap-4'}>
@@ -33,7 +39,8 @@ const HomePage = () => {
           </div>
         )}
       </div>
-        {filteredProducts.length === 0 && <h2 className={'text-center text-2xl font-bold'}>По вашему запросу ничего не найдено..</h2>}
+      {filteredProducts.length === 0 &&
+        <h2 className={'text-center text-2xl font-bold'}>По вашему запросу ничего не найдено..</h2>}
     </div>
   );
 };

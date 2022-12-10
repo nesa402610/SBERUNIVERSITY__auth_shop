@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {filterProducts} from "../store/reducers/productsSlice";
+import {setSearch} from "../store/reducers/productsSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Header = () => {
                type="text"
                placeholder={"Поиск..."}
                onKeyPress={e=> e.key === 'Enter' ? nav('/') : ''}
-               onChange={e => dispatch(filterProducts(e.target.value))}
+               onChange={e => dispatch(setSearch(e.target.value))}
         />
       </div>
       {localStorage.getItem('token') ?
