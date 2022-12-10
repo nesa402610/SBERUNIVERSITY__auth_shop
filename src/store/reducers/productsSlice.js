@@ -20,7 +20,6 @@ const productsSlice = createSlice({
     [fetchProducts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.products = action.payload;
-      state.filteredProducts = action.payload;
     },
     [fetchProducts.pending.type]: (state) => {
       state.isLoading = true;
