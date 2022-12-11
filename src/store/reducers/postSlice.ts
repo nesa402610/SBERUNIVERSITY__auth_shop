@@ -1,10 +1,16 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchPosts} from "../actions/fetchPosts";
+import {IPost} from "../../types";
 
-const initialState = {
+interface postsSliceProps {
+  posts: IPost[]
+  isLoading: boolean
+  error: string
+}
+const initialState: postsSliceProps = {
   posts: [],
   isLoading: false,
-  error: null
+  error: ''
 };
 
 const postsSlice = createSlice({
@@ -12,14 +18,14 @@ const postsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchPosts.fulfilled.type]: (state, action) => {
+    [fetchPosts.fulfilled.type]: (state, action: PayloadAction<IPost[]>) => {
       state.isLoading = false;
       state.posts = action.payload;
     },
     [fetchPosts.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [fetchPosts.rejected.type]: (state, action) => {
+    [fetchPosts.rejected.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = action.payload;
     }
@@ -27,8 +33,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
-export const {
-  fetchPostsPending,
-  fetchPostsFulfilled,
-  fetchPostsRejected
-} = postsSlice.actions;
+// export const {} = postsSlice.actions;

@@ -1,18 +1,26 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchUser} from "../actions/fetchUser";
+import {IUser} from "../../types";
 
-const initialState = {
-  user: {},
+interface authSliceProps {
+  user: IUser
+  isAuth: boolean
+  isLoading: boolean
+  error: string
+}
+
+const initialState: authSliceProps = {
+  user: {name: '', email: '', _id: '', about: '', avatar: ''},
   isAuth: false,
   isLoading: false,
-  error: null
+  error: ''
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateUserData(state, action) {
+    updateUserData(state, action: PayloadAction<IUser>) {
       state.user = action.payload
     }
   },

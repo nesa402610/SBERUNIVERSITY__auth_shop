@@ -1,11 +1,19 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchProducts} from "../actions/fetchProducts";
+import {IProduct} from "../../types";
 
-const initialState = {
+interface productSliceProps {
+  products: IProduct[]
+  searchText: string
+  isLoading: boolean
+  error: string
+}
+
+const initialState: productSliceProps = {
   products: [],
-  searchText: null,
+  searchText: '',
   isLoading: false,
-  error: null
+  error: ''
 };
 
 const productsSlice = createSlice({
@@ -17,14 +25,14 @@ const productsSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchProducts.fulfilled.type]: (state, action) => {
+    [fetchProducts.fulfilled.type]: (state, action: PayloadAction<IProduct[]>) => {
       state.isLoading = false;
       state.products = action.payload;
     },
     [fetchProducts.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [fetchProducts.rejected.type]: (state, action) => {
+    [fetchProducts.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     }
@@ -32,4 +40,4 @@ const productsSlice = createSlice({
 });
 
 export default productsSlice.reducer;
-export const {filterProducts, setSearch} = productsSlice.actions;
+export const {setSearch} = productsSlice.actions;

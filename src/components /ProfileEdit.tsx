@@ -1,19 +1,24 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import {api} from "../APIs/API";
 import {updateUserData} from "../store/reducers/authSlice";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {IUser} from "../types";
 
-const ProfileEdit = ({setIsEdit}) => {
-  const {user} = useSelector(state => state.auth);
-  const [data, setData] = useState({
+interface ProfileEditProps {
+  setIsEdit: Dispatch<SetStateAction<boolean>>
+}
+
+const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
+  const {user} = useAppSelector(state => state.auth);
+  const [data, setData] = useState<IUser>({
     avatar: user.avatar,
     name: user.name,
     about: user.about,
     // email: user.email
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const updateProfileHandler = (e) => {
+  const updateProfileHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (data.avatar !== user.avatar) {
       api.updateUserAvatar({avatar: data.avatar})
@@ -30,7 +35,7 @@ const ProfileEdit = ({setIsEdit}) => {
     <div className={'flex bg-neutral-800 p-4 justify-between'}>
       <div className={'flex gap-8'}>
         <div className="flex flex-col gap-2">
-          <img width={'200px'} src={user.avatar} alt=""/>
+          <img src={user.avatar} alt=""/>
           <input placeholder={'Ссылка на аватар'}
                  className={'bg-neutral-700'}
                  type="text"
@@ -56,7 +61,7 @@ const ProfileEdit = ({setIsEdit}) => {
         </div>
       </div>
       <div className={'flex flex-col gap-2'}>
-        <button onClick={(e) => updateProfileHandler(e)} className={'bg-green-800 px-4 py-2'}>Сохранить</button>
+        <button onClick={e=> updateProfileHandler(e)} className={'bg-green-800 px-4 py-2'}>Сохранить</button>
         <button onClick={() => setIsEdit(false)} className={'bg-red-800 px-4 py-2'}>Отмена</button>
       </div>
     </div>

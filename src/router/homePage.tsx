@@ -1,8 +1,8 @@
-import React, {useMemo} from 'react';
-import {useSelector} from "react-redux";
+import React, {FC, useMemo} from 'react';
+import {useAppSelector} from "../hooks/redux";
 
-const HomePage = () => {
-  const {products, searchText} = useSelector(state => state.products);
+const HomePage: FC = () => {
+  const {products, searchText} = useAppSelector(state => state.products);
 
   const filteredProducts = useMemo(() => {
     if (searchText) return products.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()));

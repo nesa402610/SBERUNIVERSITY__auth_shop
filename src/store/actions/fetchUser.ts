@@ -3,7 +3,7 @@ import {api} from "../../APIs/API";
 
 export const fetchUser = createAsyncThunk(
   'user/fetchAuth',
-  async (_, thunkAPI) => {
+  async (_) => {
     const response = await api.getUserData()
     return response.data;
   }

@@ -3,8 +3,8 @@ import {api} from "../../APIs/API";
 
 export const fetchPosts = createAsyncThunk(
   'user/fetchPosts',
-  async (_, thunkAPI) => {
+  async (_) => {
     const response = await api.getPosts()
-    return response.data.posts;
+    return response.data;
   }
 )
