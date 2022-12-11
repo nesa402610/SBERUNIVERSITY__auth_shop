@@ -35,7 +35,7 @@ const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
     <div className={'flex bg-neutral-800 p-4 justify-between'}>
       <div className={'flex gap-8'}>
         <div className="flex flex-col gap-2">
-          <img src={user.avatar} alt=""/>
+          <img width={'200px'} src={user.avatar} alt=""/>
           <input placeholder={'Ссылка на аватар'}
                  className={'bg-neutral-700'}
                  type="text"
