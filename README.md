@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Финальный проект по курсам от Сбера
+### Stack:
+* React
+* React Router DOM
+* Axios
+* Redux (Redux Toolkit)
+* Typescript
+* React Icons
+* Tailwind CSS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Немного о костылях
+* Для авторизации используется упрощенная модель JWT, тк мы не используем refreshToken, только долгоживущий accessToken.
+* Я только изучаю TypeScript и поэтому могут быть _**ts-ignore**_ и _**any**_ там, где можно обойтись без этого, как и могу забыть тип записать. У меня только базовое понимание есть.
+* React Router DOM обновлен до 6.4.4, где изменился роутинг, переделывать я не стал, тк не вижу причин, ибо еще не понял прикола _**лоадеров**_ и _**экшенов**_
 
-## Available Scripts
+### Статус выполнения
+1. **Задание #1**
+   * [x] Страница регистрации
+   * [x] Страница авторизации
+   * [x] Главная страница с товарами
+   * [x] Детальная страница с пользователем
+2. **Все что можно сделать**
+    * [ ] **Редактирование профиля**
+      * [x] Смена имени
+      * [x] Смена описания
+      * [x] Смена аватарки
+      * [ ] Сброс пароля
+      * [ ] Смена пароля
+    * [x] Поиск по товарам
+    * [ ] **Посты**
+      * [ ] Страница с постами
+      * [ ] Создание нового поста
+      * [ ] Редактирование поста
+      * [ ] Удаление поста
+      * [ ] Отображение количества лайков у поста
+      * [ ] Лайки на пост (поставить и убрать)
+      * [ ] Комментарии к постам (добавить и удалить)
+    * [ ] **Товары**
+      * [ ] Добавление нового товара
+      * [ ] Отображение количества лайков у товара
+      * [ ] Лайки на товар (поставить и убрать)
+      * [ ] Удаление товара
+      * [ ] Отзывы к товарам (добавить и удалить)
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+~~API подготовлено в рамках курса и может отвалиться в какой-то момент, поэтому тут проект может перестать работать со временем~~
