@@ -18,6 +18,9 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
+    addNewPost(state, action: PayloadAction<IPost>){
+      state.posts.push(action.payload)
+    },
     addLike(state, action) {
       state.posts.map(p => {
         return p._id === action.payload.postID
@@ -40,7 +43,7 @@ const postsSlice = createSlice({
   extraReducers: {
     [fetchPosts.fulfilled.type]: (state, action: PayloadAction<IPost[]>) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.posts = action.payload.reverse();
     },
     [fetchPosts.pending.type]: (state) => {
       state.isLoading = true;
@@ -53,4 +56,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
-export const {addLike, disLike} = postsSlice.actions;
+export const {addLike, disLike, addNewPost} = postsSlice.actions;
