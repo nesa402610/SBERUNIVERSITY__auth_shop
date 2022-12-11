@@ -42,4 +42,7 @@
       * [ ] Удаление товара
       * [ ] Отзывы к товарам (добавить и удалить)
 
+## [Предпросмотр](https://sberuniversity-dogfood-shop.netlify.app/)
+![img.png](https://sun9-east.userapi.com/sun9-18/s/v1/ig2/1fDK3wJ-I-GCv8vsU62HmzWEIrp8EPMZmLArJcen6lNf-w1RQDFzG5n7KSITGUoft8d9p9Wvp8xPiwIzb_cRHMuM.jpg?size=2560x1456&quality=96&type=album)
+
 ~~API подготовлено в рамках курса и может отвалиться в какой-то момент, поэтому тут проект может перестать работать со временем~~
