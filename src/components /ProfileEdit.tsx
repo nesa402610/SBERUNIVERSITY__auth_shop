@@ -2,6 +2,7 @@ import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import {api} from "../APIs/API";
 import {updateUserData} from "../store/reducers/authSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {showNotification__ERROR, showNotification__SUCCESS} from "../store/reducers/notificationSlice";
 
 interface ProfileEditProps {
   setIsEdit: Dispatch<SetStateAction<boolean>>
@@ -19,15 +20,28 @@ const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
 
   const updateProfileHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (data.avatar !== user.avatar) {
+    if (data.avatar !== user.avatar && data.avatar !== '') {
       api.updateUserAvatar({avatar: data.avatar})
-        .then(r => dispatch(updateUserData(r.data)));
+        .then(r => {
+          dispatch(updateUserData(r.data))
+          dispatch(showNotification__SUCCESS())
+        })
+        .catch(err => {
+          dispatch(showNotification__ERROR(err.response.data.message))
+        })
+    } else {
+      //вырезаем аватар и емеил, тк они не нужны тут
+      const {avatar, email, ...userData} = data;
+      api.updateUserData(userData).then((r) => {
+        dispatch(updateUserData(r.data));
+        setIsEdit(false);
+        dispatch(showNotification__SUCCESS())
+      })
+        .catch(err => {
+          dispatch(showNotification__ERROR(err.response.data.message))
+        })
     }
-    const {avatar, ...datas} = data;
-    api.updateUserData(datas).then((r) => {
-      dispatch(updateUserData(r.data));
-      setIsEdit(false);
-    });
+
   };
 
   return (
@@ -60,7 +74,7 @@ const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
         </div>
       </div>
       <div className={'flex flex-col gap-2'}>
-        <button onClick={e=> updateProfileHandler(e)} className={'bg-green-800 px-4 py-2'}>Сохранить</button>
+        <button onClick={e => updateProfileHandler(e)} className={'bg-green-800 px-4 py-2'}>Сохранить</button>
         <button onClick={() => setIsEdit(false)} className={'bg-red-800 px-4 py-2'}>Отмена</button>
       </div>
     </div>

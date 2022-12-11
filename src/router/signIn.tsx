@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {api} from "../APIs/API";
 
 interface IData {
@@ -14,14 +14,13 @@ const SignIn: FC = () => {
     email: '',
     password: ''
   });
-  const nav = useNavigate()
   const [msg, setMsg] = useState<any>(null);
   const signInHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     axios.post<IData>('https://api.react-learning.ru/signin', data)
       .then(r => {
         localStorage.setItem('token', r.data.token)
-        nav('/')
+        document.location.replace('/')
       })
       .catch(err => {
         setMsg({err: err.response.data.message});
