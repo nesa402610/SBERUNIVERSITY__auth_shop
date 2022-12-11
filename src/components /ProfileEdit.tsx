@@ -2,7 +2,6 @@ import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import {api} from "../APIs/API";
 import {updateUserData} from "../store/reducers/authSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {IUser} from "../types";
 
 interface ProfileEditProps {
   setIsEdit: Dispatch<SetStateAction<boolean>>
@@ -10,11 +9,11 @@ interface ProfileEditProps {
 
 const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
   const {user} = useAppSelector(state => state.auth);
-  const [data, setData] = useState<IUser>({
+  const [data, setData] = useState({
     avatar: user.avatar,
     name: user.name,
     about: user.about,
-    // email: user.email
+    email: user.email
   });
   const dispatch = useAppDispatch();
 
