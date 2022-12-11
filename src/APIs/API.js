@@ -19,6 +19,15 @@ class API {
   getPosts() {
     return axios.get('/v2/' + this.groupId + '/posts');
   }
+  createPost(data) {
+    return axios.post('/v2/' + this.groupId + '/posts', data);
+  }
+  likePost(postID) {
+    return axios.put('/v2/' + this.groupId + '/posts/likes/' + postID);
+  }
+  dislikePost(postID) {
+    return axios.delete('/v2/' + this.groupId + '/posts/likes/' + postID);
+  }
 
   async uploadProduct(options) {
     return await axios.post('/products', options);
