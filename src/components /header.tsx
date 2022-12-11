@@ -10,8 +10,8 @@ const Header = () => {
   const {user} = useAppSelector(state => state.auth);
 
   return (
-    <header className={'flex gap-8 justify-between text-xl px-4 py-2 bg-neutral-800'}>
-      <div className="flex gap-4">
+    <header className={'flex min-h-[56px] gap-8 justify-between text-xl px-4 py-2 bg-neutral-800'}>
+      <nav className="flex gap-4">
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/'}>
           <MdHome/>
           Главная
@@ -20,7 +20,7 @@ const Header = () => {
           <MdSource/>
           Посты
         </NavLink>
-      </div>
+      </nav>
       <div className={'flex flex-1 justify-center'}>
         <input className={'bg-neutral-700 w-1/2 px-4'}
                type="text"

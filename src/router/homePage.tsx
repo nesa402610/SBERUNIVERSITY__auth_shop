@@ -39,8 +39,12 @@ const HomePage: FC = () => {
           </div>
         )}
       </div>
-      {filteredProducts.length === 0 &&
-        <h2 className={'text-center text-2xl font-bold'}>По вашему запросу ничего не найдено..</h2>}
+      {/*Сообщение мол ничего нет или нужна авторизация*/}
+      {!localStorage.getItem('token')
+        ? <h2 className={'text-center text-2xl font-bold'}>Требуется авторизация</h2>
+        : filteredProducts.length === 0 &&
+        <h2 className={'text-center text-2xl font-bold'}>По вашему запросу ничего не найдено..</h2>
+      }
     </div>
   );
 };
