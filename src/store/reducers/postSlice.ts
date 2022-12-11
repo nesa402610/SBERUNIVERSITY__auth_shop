@@ -7,6 +7,7 @@ interface postsSliceProps {
   isLoading: boolean
   error: string
 }
+
 const initialState: postsSliceProps = {
   posts: [],
   isLoading: false,
@@ -16,7 +17,26 @@ const initialState: postsSliceProps = {
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    addLike(state, action) {
+      state.posts.map(p => {
+        return p._id === action.payload.postID
+          ?
+          p.likes.push(action.payload.userID)
+          :
+          p
+      })
+    },
+    disLike(state, action) {
+      state.posts.map(p => {
+        return p._id === action.payload.postID
+          ?
+          p.likes = p.likes.filter((l: any) => l !== action.payload.userID)
+          :
+          p
+      })
+    },
+  },
   extraReducers: {
     [fetchPosts.fulfilled.type]: (state, action: PayloadAction<IPost[]>) => {
       state.isLoading = false;
@@ -33,4 +53,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
-// export const {} = postsSlice.actions;
+export const {addLike, disLike} = postsSlice.actions;
