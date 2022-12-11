@@ -30,7 +30,7 @@ export interface IUser {
   name: string
   about: string | ''
   avatar: string
-  _id?: string
+  _id: string
   email?: string
   __v?: number
 }
@@ -38,11 +38,11 @@ export interface IPost {
   title: string
   text: string
   image?: string
-  tags?: string[]
-  likes?: []
+  tags: string[]
+  likes: any
   comments?: []
   isPublished?: boolean
-  _id?: string
-  author?: string
+  _id: string
+  author: IUser
   created_at?: string
 }
