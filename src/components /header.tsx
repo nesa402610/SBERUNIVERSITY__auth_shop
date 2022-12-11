@@ -22,7 +22,7 @@ const Header = () => {
         </NavLink>
       </div>
       <div className={'flex flex-1 justify-center'}>
-        <input className={'bg-neutral-700 w-1/2 px-4 focus-visible:outline outline-1 outline-neutral-400'}
+        <input className={'bg-neutral-700 w-1/2 px-4'}
                type="text"
                placeholder={"Поиск..."}
                onKeyDown={e => e.key === 'Enter' ? nav('/') : ''}
