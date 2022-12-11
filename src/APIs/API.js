@@ -26,7 +26,7 @@ class API {
     return axios.post('/v2/' + this.groupId + '/posts', data);
   }
 
-  editPost(postID, data) {
+  updatePost(postID, data) {
     return axios.patch('/v2/' + this.groupId + '/posts/' + postID, data);
   }
 
@@ -84,6 +84,7 @@ class API {
   }
 
 // другие методы работы с API
+
 }
 
 export const api = new API({
