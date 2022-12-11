@@ -26,6 +26,15 @@ class API {
     return axios.post('/v2/' + this.groupId + '/posts', data);
   }
 
+  editPost(postID, data) {
+    return axios.patch('/v2/' + this.groupId + '/posts/' + postID, data);
+  }
+
+  deletePost(postID) {
+    return axios.delete('/v2/' + this.groupId + '/posts/' + postID);
+
+  }
+
   likePost(postID) {
     return axios.put('/v2/' + this.groupId + '/posts/likes/' + postID);
   }
@@ -34,44 +43,44 @@ class API {
     return axios.delete('/v2/' + this.groupId + '/posts/likes/' + postID);
   }
 
-  async uploadProduct(options) {
-    return await axios.post('/products', options);
+  uploadProduct(options) {
+    return axios.post('/products', options);
   }
 
-  async likeProduct(_id) {
-    return await axios.put('products/likes/' + _id);
+  likeProduct(_id) {
+    return axios.put('products/likes/' + _id);
   }
 
-  async dislikeProduct(_id) {
-    return await axios.delete('products/likes/' + _id);
+  dislikeProduct(_id) {
+    return axios.delete('products/likes/' + _id);
   }
 
-  async addReview(_id) {
-    return await axios.delete('review/' + _id);
+  addReview(_id) {
+    return axios.delete('review/' + _id);
   }
 
-  async removeReview(_id) {
-    return await axios.delete('review/' + _id);
+  removeReview(_id) {
+    return axios.delete('review/' + _id);
   }
 
   getUserData() {
     return axios.get('/v2/' + this.groupId + '/users/me');
   }
 
-  async updateUserData(data) {
-    return await axios.patch('/v2/' + this.groupId + '/users/me', data);
+  updateUserData(data) {
+    return axios.patch('/v2/' + this.groupId + '/users/me', data);
   }
 
-  async updateUserAvatar(data) {
-    return await axios.patch('/v2/' + this.groupId + '/users/me/avatar', data);
+  updateUserAvatar(data) {
+    return axios.patch('/v2/' + this.groupId + '/users/me/avatar', data);
   }
 
-  async resetPassword(email) {
-    return await axios.post('/password-reset', email);
+  resetPassword(email) {
+    return axios.post('/password-reset', email);
   }
 
-  async updatePassword(data) {
-    return await axios.post('/password-reset/' + data.userID + '/' + data.token);
+  updatePassword(data) {
+    return axios.post('/password-reset/' + data.userID + '/' + data.token);
   }
 
 // другие методы работы с API

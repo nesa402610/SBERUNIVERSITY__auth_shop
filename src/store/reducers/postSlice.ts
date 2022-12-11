@@ -19,7 +19,11 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     addNewPost(state, action: PayloadAction<IPost>){
-      state.posts.push(action.payload)
+      state.posts.unshift(action.payload)
+    },
+    deletePost(state, action){
+      console.log(action.payload)
+      state.posts = state.posts.filter(p => p._id !== action.payload)
     },
     addLike(state, action) {
       state.posts.map(p => {
@@ -56,4 +60,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
-export const {addLike, disLike, addNewPost} = postsSlice.actions;
+export const {addLike, disLike, addNewPost, deletePost} = postsSlice.actions;
