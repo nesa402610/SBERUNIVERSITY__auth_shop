@@ -35,6 +35,14 @@ class API {
 
   }
 
+  createComment(postID, data) {
+    return axios.post('/v2/' + this.groupId + '/posts/comments/' + postID, data);
+  }
+
+  deleteComment(postID, commentID) {
+    return axios.delete('/v2/' + this.groupId + '/posts/comments/' + postID + '/' + commentID);
+  }
+
   likePost(postID) {
     return axios.put('/v2/' + this.groupId + '/posts/likes/' + postID);
   }

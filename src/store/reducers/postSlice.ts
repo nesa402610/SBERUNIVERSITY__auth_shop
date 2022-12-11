@@ -31,6 +31,13 @@ const postsSlice = createSlice({
         p
       )
     },
+    setComments(state, action) {
+      state.posts.map(p => p._id === action.payload.postID ?
+        p.comments = action.payload.comments
+        :
+        p
+      )
+    },
     addLike(state, action) {
       state.posts.map(p => {
         return p._id === action.payload.postID
@@ -66,4 +73,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
-export const {addLike, disLike, addNewPost, deletePost, updatePost} = postsSlice.actions;
+export const {addLike, disLike, addNewPost, deletePost, updatePost, setComments} = postsSlice.actions;

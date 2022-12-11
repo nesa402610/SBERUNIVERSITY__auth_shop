@@ -4,8 +4,9 @@ import {IPost} from "../../types";
 import PostFooter from "./postFooter";
 import {api} from "../../APIs/API";
 import {useAppDispatch} from "../../hooks/redux";
-import {updatePost} from "../../store/reducers/postSlice";
+import {setComments, updatePost} from "../../store/reducers/postSlice";
 import {showNotification__ERROR, showNotification__SUCCESS} from "../../store/reducers/notificationSlice";
+import {RxCross2} from "react-icons/rx";
 
 interface PostCardProps {
   post: IPost
@@ -15,6 +16,7 @@ interface PostCardProps {
 const PostCard: FC<PostCardProps> = ({post, handler}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [postData, setPostData] = useState(post);
+  const [comment, setComment] = useState<string>('');
   const dispatch = useAppDispatch()
 
   const updatePostHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,6 +28,23 @@ const PostCard: FC<PostCardProps> = ({post, handler}) => {
         setIsEdit(false)
       })
       .catch(err => dispatch(showNotification__ERROR(err.respone.data.message)))
+  };
+
+  const sendComment = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    if (e.key === 'Enter') {
+      api.createComment(post._id, {text: comment})
+        .then((r) => {
+          dispatch(setComments({comments: r.data.comments, postID: post._id}))
+        })
+    }
+  };
+
+  const deleteCommentHandler = (postID: string, commentID: string) => {
+    api.deleteComment(postID, commentID)
+      .then((r) => {
+        dispatch(setComments({comments: r.data.comments, postID}))
+      })
   };
 
   return (
@@ -76,6 +95,25 @@ const PostCard: FC<PostCardProps> = ({post, handler}) => {
           }
         </div>
         <PostFooter post={post} setIsEdit={setIsEdit}/>
+        <div className={'flex flex-col gap-2 bg-neutral-800 p-2'}>
+          <input type="text"
+                 placeholder={'Комментарий...'}
+                 className={'bg-neutral-700 p-2 w-full'}
+                 value={comment}
+                 onChange={e => setComment(e.target.value)}
+                 onKeyDown={e => e.key === 'Enter' && sendComment(e)}/>
+          <div className={'flex flex-col gap-2 h-[70px] overflow-scroll'}>
+            {post.comments.map(c =>
+              <div className={'relative flex flex-col gap-1 bg-neutral-700 p-2 drop-shadow-md'}>
+                <span>{c.author}</span>
+                <span>{c.text}</span>
+                <RxCross2 onClick={() => deleteCommentHandler(post._id, c._id)}
+                          className={'absolute right-2 hover:text-neutral-300 text-xl transition-all cursor-pointer'}/>
+              </div>
+            )}
+            {post.comments.length === 0 && <h2>Оставь первый комментарий</h2>}
+          </div>
+        </div>
       </div>
     </>
   );
