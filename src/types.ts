@@ -37,7 +37,7 @@ export interface IUser {
 export interface IPost {
   title: string
   text: string
-  image?: string
+  image: string
   tags: string[]
   likes: any
   comments?: []
