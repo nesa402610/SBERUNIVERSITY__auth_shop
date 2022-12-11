@@ -3,7 +3,7 @@ import moment from "moment/moment";
 import {IPost} from "../../types";
 import PostFooter from "./postFooter";
 import {api} from "../../APIs/API";
-import {useAppDispatch} from "../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {setComments, updatePost} from "../../store/reducers/postSlice";
 import {showNotification__ERROR, showNotification__SUCCESS} from "../../store/reducers/notificationSlice";
 import {RxCross2} from "react-icons/rx";
@@ -14,6 +14,7 @@ interface PostCardProps {
 }
 
 const PostCard: FC<PostCardProps> = ({post, handler}) => {
+  const {user} = useAppSelector(state => state.auth)
   const [isEdit, setIsEdit] = useState(false);
   const [postData, setPostData] = useState(post);
   const [comment, setComment] = useState<string>('');
@@ -107,8 +108,10 @@ const PostCard: FC<PostCardProps> = ({post, handler}) => {
               <div className={'relative flex flex-col gap-1 bg-neutral-700 p-2 drop-shadow-md'}>
                 <span>{c.author}</span>
                 <span>{c.text}</span>
-                <RxCross2 onClick={() => deleteCommentHandler(post._id, c._id)}
-                          className={'absolute right-2 hover:text-neutral-300 text-xl transition-all cursor-pointer'}/>
+                {c.author === user._id &&
+                  <RxCross2 onClick={() => deleteCommentHandler(post._id, c._id)}
+                            className={'absolute right-2 hover:text-neutral-300 text-xl transition-all cursor-pointer'}/>
+                }
               </div>
             )}
             {post.comments.length === 0 && <h2>Оставь первый комментарий</h2>}

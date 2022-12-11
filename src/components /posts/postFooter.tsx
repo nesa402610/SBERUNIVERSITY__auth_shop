@@ -20,7 +20,6 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
   const [delReady, setDelReady] = useState(false);
   const dispatch = useAppDispatch()
 
-
   const likePostHandler = (postID: string) => {
     api.likePost(postID)
       .then(() => {
@@ -59,7 +58,6 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
       setDelReady(true)
     }
   };
-
   return (
     <div className={'flex flex-col gap-2'}>
       <div className={'flex text-neutral-300 text-sm '}>
@@ -79,16 +77,18 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
             <span className={'leading-none'}>{post.likes.length}</span>
           </div>
         }
-        <div className={'flex gap-4 items-center text-xl'}>
-          <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-               onClick={() => setIsEdit(true)}>
-            <AiTwotoneEdit/>
+        {post.author._id === user._id &&
+          <div className={'flex gap-4 items-center text-xl'}>
+            <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
+                 onClick={() => setIsEdit(true)}>
+              <AiTwotoneEdit/>
+            </div>
+            <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
+                 onClick={() => deletePostHandler(post._id)}>
+              <AiTwotoneDelete className={(delReady ? 'text-red-600' : 'text-neutral-400') + ' transition-all'}/>
+            </div>
           </div>
-          <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-               onClick={() => deletePostHandler(post._id)}>
-            <AiTwotoneDelete className={(delReady ? 'text-red-600' : 'text-neutral-400') + ' transition-all'}/>
-          </div>
-        </div>
+        }
       </div>
     </div>
   );

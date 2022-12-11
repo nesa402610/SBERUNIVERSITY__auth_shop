@@ -40,13 +40,13 @@ export interface IPost {
   image: string
   tags: string[]
   likes: any
-  comments: IPostAuthor[]
+  comments: IPostCommentsAuthor[]
   isPublished?: boolean
   _id: string
   author: IUser
   created_at?: string
 }
-interface IPostAuthor {
+interface IPostCommentsAuthor {
   author: string
   text: string
   _id: string
