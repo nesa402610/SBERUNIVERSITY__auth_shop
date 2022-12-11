@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 interface IData {
   group: string
@@ -19,11 +19,15 @@ const SignUp = () => {
     group: '',
     password: ''
   });
+  const nav = useNavigate()
   const [msg, setMsg] = useState<msgProps | null>(null);
   const signUpHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     axios.post('https://api.react-learning.ru/signup', data)
-      .then(() => setMsg({ok: 'Успешная регистрация'}))
+      .then(() => {
+        setMsg({ok: 'Успешная регистрация'})
+        nav('/signIn')
+      })
       .catch(err => {
         setMsg({err: err.response.data.message});
       });
@@ -36,7 +40,7 @@ const SignUp = () => {
           {msg?.ok && <h2>{msg.ok}</h2>}
           {msg?.err && <h2>{msg.err}</h2>}
           <label className={''}>
-            email
+            Email
             <input type="email"
                    name={'email'}
                    className={'w-full p-2 bg-stone-900'}
@@ -60,9 +64,12 @@ const SignUp = () => {
           </label>
           {/*TODO*/}
           <div className={'flex justify-between text-sm'}>
-            <span className={'cursor-pointer hover:text-neutral-300 transition-all'}>Забыли пароль?</span>
-            <Link to={'/signIn'} className={'cursor-pointer hover:text-neutral-300 transition-all'}>Войти в
-                                                                                                    аккаунт</Link>
+            <Link to={'/reset-password'} className={'cursor-pointer hover:text-neutral-300 transition-all'}>
+              Забыли пароль?
+            </Link>
+            <Link to={'/signIn'} className={'cursor-pointer hover:text-neutral-300 transition-all'}>
+              Войти в аккаунт
+            </Link>
           </div>
           <button className={'bg-neutral-900 p-2 mt-2 hover:bg-neutral-800 transition-all'}
                   onClick={e => signUpHandler(e)}>

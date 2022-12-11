@@ -5,6 +5,7 @@ import SignUp from "./signUp";
 import HomePage from "./homePage";
 import ProfilePage from "./profilePage";
 import PostsPage from "./postsPage";
+import PasswordReset from "./passwordReset";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <Route path={'posts'} element={<PostsPage/>}/>
       <Route path={'/signIn'} element={<SignIn/>}/>
       <Route path={'/signUp'} element={<SignUp/>}/>
+      <Route path={'/reset-password'} element={<PasswordReset/>}/>
     </Routes>
   );
 };

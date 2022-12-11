@@ -1,6 +1,8 @@
 import axios from "axios";
+
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-axios.defaults.baseURL = 'https://api.react-learning.ru'
+axios.defaults.baseURL = 'https://api.react-learning.ru';
+
 class API {
   constructor(options) {
     this.baseUrl = options.baseUrl;
@@ -19,12 +21,15 @@ class API {
   getPosts() {
     return axios.get('/v2/' + this.groupId + '/posts');
   }
+
   createPost(data) {
     return axios.post('/v2/' + this.groupId + '/posts', data);
   }
+
   likePost(postID) {
     return axios.put('/v2/' + this.groupId + '/posts/likes/' + postID);
   }
+
   dislikePost(postID) {
     return axios.delete('/v2/' + this.groupId + '/posts/likes/' + postID);
   }
@@ -59,6 +64,14 @@ class API {
 
   async updateUserAvatar(data) {
     return await axios.patch('/v2/' + this.groupId + '/users/me/avatar', data);
+  }
+
+  async resetPassword(email) {
+    return await axios.post('/password-reset', email);
+  }
+
+  async updatePassword(data) {
+    return await axios.post('/password-reset/' + data.userID + '/' + data.token);
   }
 
 // другие методы работы с API
