@@ -10,7 +10,7 @@ const Notification: FC = () => {
     <>
       {isActive &&
         <div onClick={() => dispatch(hideNotification())}
-             className={(!closeable ? 'cursor-not-allowed ' : 'cursor-pointer ') + 'backdrop-blur-lg absolute rounded-xl mr-4 mt-4 right-0 p-4 font-bold' + (error ? ' bg-red-900/80' : ' bg-green-900/80')}>
+             className={(!closeable ? 'cursor-not-allowed ' : 'cursor-pointer ') + 'z-50 backdrop-blur-lg fixed rounded-xl mr-4 mt-4 right-0 p-4 font-bold' + (error ? ' bg-red-900/80' : ' bg-green-900/80')}>
           <div className={'flex items-center gap-1 justify-end'}>
             <span>{message}</span>
             <MdInfoOutline size={'1.5rem'}/>
