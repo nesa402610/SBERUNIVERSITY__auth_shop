@@ -20,6 +20,7 @@ const notificationSlice = createSlice({
   reducers: {
     showNotification__AUTH(state) {
       state.message = 'Требуется авторизация'
+      state.error = ' '
       state.isActive = true
       state.closeable = false
     },
