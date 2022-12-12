@@ -2,7 +2,7 @@ export interface IProduct {
   available: boolean
   pictures: string
   likes: string[]
-  reviews: []
+  reviews: IProductReviews[]
   tags: string[]
   isPublished: boolean
   _id: string
@@ -17,7 +17,13 @@ export interface IProduct {
   updated_at?: string
   __v?: number
 }
-
+interface IProductReviews {
+  author: string
+  product: string
+  rating: number
+  text: string
+  _id: string
+}
 export interface IAuthor {
   name: string
   about: string
