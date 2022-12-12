@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {setSearch} from "../store/reducers/productsSlice";
-import {MdHome, MdLogin, MdSource} from "react-icons/md";
+import {MdHome, MdLogin, MdShop, MdSource} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 
 const Header = () => {
@@ -15,6 +15,10 @@ const Header = () => {
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/'}>
           <MdHome/>
           Главная
+        </NavLink>
+        <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/catalog'}>
+          <MdShop/>
+          Каталог
         </NavLink>
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/posts'}>
           <MdSource/>
