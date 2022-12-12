@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {AiFillHeart, AiOutlineHeart, AiTwotoneDelete, AiTwotoneEdit} from "react-icons/ai";
+import {AiTwotoneDelete, AiTwotoneEdit} from "react-icons/ai";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {IPost} from "../../types";
 import {api} from "../../APIs/API";
@@ -9,6 +9,7 @@ import {
   showNotification__ERROR,
   showNotification__SUCCESS
 } from "../../store/reducers/notificationSlice";
+import LikeButton from "../likeButton";
 
 interface PostFooterProps {
   post: IPost
@@ -64,19 +65,7 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
         {post.tags.map(t => <span key={t}>{t}&nbsp;</span>)}
       </div>
       <div className={'flex gap-4 justify-between'}>
-        {post.likes.includes(user._id) ?
-          <div className={'flex cursor-pointer gap-1 bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-               onClick={() => dislikePostHandler(post._id)}>
-            <AiFillHeart color={'pink'} title={'Не нравится'} className={'text-xl'}/>
-            <span className={'leading-none'}>{post.likes.length}</span>
-          </div>
-          :
-          <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-               onClick={() => likePostHandler(post._id)}>
-            <AiOutlineHeart title={'Нравится'} className={'text-xl'}/>
-            <span className={'leading-none'}>{post.likes.length}</span>
-          </div>
-        }
+        <LikeButton item={post} likeHandler={likePostHandler} dislikeHandler={dislikePostHandler} />
         {post.author._id === user._id &&
           <div className={'flex gap-4 items-center text-xl'}>
             <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
