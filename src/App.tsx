@@ -25,7 +25,7 @@ const App = () => {
       // @ts-ignore
       dispatch(fetchPosts());
     }
-  }, [dispatch]);
+  }, []);
   return (
     <>
       <Header/>
