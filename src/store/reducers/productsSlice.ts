@@ -22,6 +22,24 @@ const productsSlice = createSlice({
   reducers: {
     setSearch(state, action) {
       state.searchText = action.payload
+    },
+    addLike(state, action) {
+      state.products.map(p => {
+        return p._id === action.payload.id
+          ?
+          p.likes.push(action.payload.userID)
+          :
+          p
+      })
+    },
+    disLike(state, action) {
+      state.products.map(p => {
+        return p._id === action.payload.id
+          ?
+          p.likes = p.likes.filter((l: any) => l !== action.payload.userID)
+          :
+          p
+      })
     }
   },
   extraReducers: {
@@ -40,4 +58,4 @@ const productsSlice = createSlice({
 });
 
 export default productsSlice.reducer;
-export const {setSearch} = productsSlice.actions;
+export const {setSearch, disLike, addLike} = productsSlice.actions;
