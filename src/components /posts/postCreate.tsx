@@ -22,30 +22,30 @@ const PostCreate = () => {
   return (
     <div className={'flex gap-4 items-end mb-4'}>
       <label className={'flex flex-col'}>
-        title
-        <input className={'bg-neutral-700 px-2'}
+        Название
+        <input className={'bg-neutral-700 px-4 py-2'}
                type="text"
                onChange={e => setData({...data, title: e.target.value})}/>
       </label>
       <label className={'flex flex-col'}>
-        text
-        <input className={'bg-neutral-700 px-2'}
+        Тело поста
+        <input className={'bg-neutral-700 px-4 py-2'}
                type="text"
                onChange={e => setData({...data, text: e.target.value})}/>
       </label>
       <label className={'flex flex-col'}>
-        image
-        <input className={'bg-neutral-700 px-2'}
+        Изображение
+        <input className={'bg-neutral-700 px-4 py-2'}
                type="text"
                onChange={e => setData({...data, image: e.target.value})}/>
       </label>
       <label className={'flex flex-col'}>
-        Tags
-        <input className={'bg-neutral-700 px-2'}
+        Тэги
+        <input className={'bg-neutral-700 px-4 py-2'}
                type="text"
                onChange={e => setTags(e.target.value)}/>
       </label>
-      <button onClick={e => createNewPostHandler(e)} className={'bg-neutral-700 px-2'}>Создать</button>
+      <button onClick={e => createNewPostHandler(e)} className={'bg-neutral-700 hover:bg-neutral-500 transition-colors px-4 py-2'}>Создать</button>
     </div>
   );
 };

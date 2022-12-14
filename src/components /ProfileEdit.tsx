@@ -45,27 +45,27 @@ const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
   };
 
   return (
-    <div className={'flex bg-neutral-800 p-4 justify-between'}>
+    <div className={'rounded-lg flex bg-neutral-800 p-4 justify-between'}>
       <div className={'flex gap-8'}>
         <div className="flex flex-col gap-2">
-          <img width={'200px'} src={user.avatar} alt=""/>
+          <img className={'rounded-lg'} width={'200px'} src={user.avatar} alt=""/>
           <input placeholder={'Ссылка на аватар'}
-                 className={'bg-neutral-700'}
+                 className={'bg-neutral-700 px-4 py-2'}
                  type="text"
                  onChange={e => setData({...data, avatar: e.target.value})}/>
         </div>
         <div className={'flex flex-col gap-2'}>
-          <input className={'bg-neutral-700 px-4 focus-within:outline outline-1 outline-neutral-400'}
+          <input className={'bg-neutral-700 px-4 py-2'}
                  type="text"
                  value={data.name}
                  onChange={e => setData({...data, name: e.target.value})}
           />
-          <input className={'bg-neutral-700 px-4 focus-within:outline outline-1 outline-neutral-400'}
+          <input className={'bg-neutral-700 px-4 py-2'}
                  type="text"
                  value={data.about}
                  onChange={e => setData({...data, about: e.target.value})}
           />
-          <input className={'bg-neutral-700 text-neutral-400 cursor-default px-4 focus-within:outline outline-1 outline-neutral-400'}
+          <input className={'bg-neutral-700 text-neutral-400 cursor-default px-4 py-2'}
                  type="text"
                  value={user.email}
                  readOnly

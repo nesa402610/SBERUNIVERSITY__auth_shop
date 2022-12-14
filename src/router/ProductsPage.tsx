@@ -48,7 +48,7 @@ const ProductsPage = () => {
         </h2>
       }
       <div className={'grid grid-cols-5 gap-4 mt-4'}>
-        <div className={'bg-neutral-800 p-4'} onClick={() => setIsModal(true)}>
+        <div className={'rounded-lg bg-neutral-800 p-4'} onClick={() => setIsModal(true)}>
           <h2>Добавить новый продукт</h2>
         </div>
         {filteredProducts.map(item =>

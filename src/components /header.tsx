@@ -27,7 +27,7 @@ const Header = () => {
         </NavLink>
       </nav>
       <div className={'flex flex-1 justify-center'}>
-        <input className={'bg-neutral-700 w-1/2 px-4'}
+        <input className={'rounded-full bg-neutral-700 w-1/2 px-4'}
                type="text"
                placeholder={"Поиск..."}
                onKeyDown={e => e.key === 'Enter' ? nav('/catalog') : ''}

@@ -52,14 +52,16 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
       }
     }
     return (
-      <Link className={'relative bg-neutral-800 p-4 flex flex-col gap-2'} to={product._id}>
-        <img className={'max-h-[250px] object-contain'} src={product.pictures} alt=""/>
+      <Link className={'rounded-lg relative bg-neutral-800 p-4 flex flex-col gap-2'} to={product._id}>
+        <div className={'flex justify-center'}>
+          <img className={'rounded-lg max-h-[250px] object-contain'} src={product.pictures} alt=""/>
+        </div>
         {product.discount > 0 &&
-          <span className={'absolute top-0 left-0 bg-red-900 text-center p-1 min-w-[40px]'}>{product.discount}</span>
+          <span className={'rounded-lg absolute top-2 left-2 bg-red-900 text-center p-1 min-w-[40px]'}>{product.discount}</span>
         }
         {product.tags.map((t) => (
             t === 'new' &&
-            <span key={t} className={'absolute top-0 right-0 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
+            <span key={t} className={'rounded-lg absolute top-2 right-2 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
           )
         )}
         <div className={'flex-1 flex flex-col justify-between gap-2'}>
@@ -83,7 +85,7 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
               </div>
             }
           </Link>
-          <button className={'bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В корзину</button>
+          <button className={'rounded-lg bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В корзину</button>
         </div>
       </Link>
     );

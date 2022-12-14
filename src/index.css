@@ -6,5 +6,8 @@ html {
   @apply bg-neutral-900 text-white
 }
 input {
-  @apply focus-visible:outline outline-1 outline-neutral-400
+  @apply focus-visible:outline outline-1 outline-neutral-400 rounded-lg
+}
+button {
+  @apply rounded-lg
 }
