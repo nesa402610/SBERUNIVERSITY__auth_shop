@@ -55,7 +55,7 @@ const ProductDetails = () => {
       <div className={'rounded-xl bg-neutral-800 p-4 flex mt-4 flex-col gap-4'}>
         <div className={'flex rounded-xl flex-col bg-neutral-700 p-2 gap-2'}>
           <span>Оставить отзыв</span>
-          <select onChange={e => setRating({...rating, rating: +e.target.value})} className={'bg-neutral-800 '}
+          <select onChange={e => setRating({...rating, rating: +e.target.value})} className={'bg-neutral-800 rounded-lg px-4 py-2'}
           >
             <option value="1">Ужасно</option>
             <option value="2">Плохо</option>
