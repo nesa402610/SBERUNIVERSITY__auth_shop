@@ -3,6 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {setSearch} from "../store/reducers/productsSlice";
 import {MdHome, MdLogin, MdShop, MdSource} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {RiShoppingBag3Fill} from "react-icons/ri";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ const Header = () => {
         </NavLink>
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/catalog'}>
           <MdShop/>
-          Каталог
+          Товары
         </NavLink>
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/posts'}>
           <MdSource/>
@@ -29,22 +30,26 @@ const Header = () => {
         <input className={'bg-neutral-700 w-1/2 px-4'}
                type="text"
                placeholder={"Поиск..."}
-               onKeyDown={e => e.key === 'Enter' ? nav('/') : ''}
+               onKeyDown={e => e.key === 'Enter' ? nav('/catalog') : ''}
                onChange={e => dispatch(setSearch(e.target.value))}
         />
       </div>
-      {localStorage.getItem('token') ?
-        <NavLink className={'hover:text-neutral-300'} to={'/profile'}>
-          <div className={'w-[40px] hover:scale-110 transition-all rounded-full overflow-hidden bg'}>
-            <img src={user.avatar} alt=""/>
-          </div>
-        </NavLink>
-        :
-        <NavLink className={'hover:text-neutral-300 flex items-center gap-1'} to={'/signIn'}>
-          Войти
-          <MdLogin className={'text-xl'}/>
-        </NavLink>
-      }
+      <div className={'flex gap-4 items-center'}>
+        <NavLink to={'/cart'}><RiShoppingBag3Fill className={'text-3xl text-neutral-300 hover:text-neutral-100 transition-all hover:scale-110'}/></NavLink>
+        {localStorage.getItem('token') ?
+          <NavLink className={'hover:text-neutral-300'} to={'/profile'}>
+            <div className={'w-[40px] hover:scale-110 transition-all rounded-full overflow-hidden bg'}>
+              <img src={user.avatar} alt=""/>
+            </div>
+          </NavLink>
+          :
+          <NavLink className={'hover:text-neutral-300 flex items-center gap-1'} to={'/signIn'}>
+            Войти
+            <MdLogin className={'text-xl'}/>
+          </NavLink>
+        }
+      </div>
+
     </header>
   );
 };
