@@ -20,8 +20,28 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
+    addProduct(state, action) {
+      state.products.push(action.payload)
+    },
+    deleteProduct(state, action) {
+      state.products = state.products.filter(p => p._id !== action.payload)
+    },
     setSearch(state, action) {
       state.searchText = action.payload
+    },
+    addReview(state, action) {
+      state.products = state.products.filter(p => p._id === action.payload.productID ?
+        p.reviews = action.payload.reviews
+        :
+        p
+      )
+    },
+    removeReview(state, action) {
+      state.products = state.products.filter(p => p._id === action.payload.productID ?
+        p.reviews = p.reviews.filter(r => r._id !== action.payload.reviewID)
+        :
+        p
+      )
     },
     addLike(state, action) {
       state.products.map(p => {
@@ -58,4 +78,4 @@ const productsSlice = createSlice({
 });
 
 export default productsSlice.reducer;
-export const {setSearch, disLike, addLike} = productsSlice.actions;
+export const {setSearch, disLike, addLike, deleteProduct, addProduct, addReview, removeReview} = productsSlice.actions;
