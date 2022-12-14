@@ -10,10 +10,6 @@ class API {
     this.groupId = options.groupId;
   }
 
-  getInitialPost() {
-// ...
-  }
-
   getProducts() {
     return axios.get('/products');
   }
@@ -63,12 +59,16 @@ class API {
     return axios.delete('products/likes/' + _id);
   }
 
-  addReview(_id) {
-    return axios.delete('review/' + _id);
+  addReview(id, data) {
+    return axios.post('products/review/' + id, data);
   }
 
-  removeReview(_id) {
-    return axios.delete('review/' + _id);
+  removeReview(data) {
+    return axios.delete('products/review/' + data.productID + '/' + data.reviewID);
+  }
+
+  deleteProduct(_id) {
+    return axios.delete('products/' + _id);
   }
 
   getUserData() {
