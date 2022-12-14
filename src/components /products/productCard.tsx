@@ -1,10 +1,12 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {IProduct} from "../../types";
 import LikeButton from "../likeButton";
 import {api} from "../../APIs/API";
-import {addLike, disLike} from "../../store/reducers/productsSlice";
+import {addLike, deleteProduct, disLike} from "../../store/reducers/productsSlice";
 import {showNotification, showNotification__ERROR} from "../../store/reducers/notificationSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {Link} from "react-router-dom";
+import DeleteButton from "../deleteButton";
 
 interface ProductCardProps {
   product: IProduct
@@ -12,6 +14,7 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({product}) => {
     const {user} = useAppSelector(state => state.auth)
+    const [delReady, setDelReady] = useState<boolean>(false);
     const dispatch = useAppDispatch()
 
     const dislikeHandler = (id: string) => {
@@ -30,9 +33,27 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         })
         .catch((err: any) => showNotification__ERROR(err.response.data.message))
     }
+
+    const deleteProductHandler = (id: string) => {
+      setTimeout(() => {
+        setDelReady(false)
+      }, 5000)
+      if (delReady) {
+
+        api.deleteProduct(id)
+          .then(() => {
+            dispatch(deleteProduct(id))
+            dispatch(showNotification({message: 'Успешное удаление продукта'}))
+          })
+          .catch((err: any) => showNotification__ERROR(err.response.data.message))
+      } else {
+        dispatch(showNotification__ERROR('Подтвердите удаление'))
+        setDelReady(true)
+      }
+    }
     return (
-      <div className={'relative bg-neutral-800 p-4 flex flex-col gap-2'}>
-        <img src={product.pictures} alt=""/>
+      <Link className={'relative bg-neutral-800 p-4 flex flex-col gap-2'} to={product._id}>
+        <img className={'max-h-[250px] object-contain'} src={product.pictures} alt=""/>
         {product.discount > 0 &&
           <span className={'absolute top-0 left-0 bg-red-900 text-center p-1 min-w-[40px]'}>{product.discount}</span>
         }
@@ -42,7 +63,7 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
           )
         )}
         <div className={'flex-1 flex flex-col justify-between gap-2'}>
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-1">
             <div className={'flex gap-2'}>
               <span className={product.discount ? 'order-2 line-through text-neutral-500' : ''}>{product.price} рублей</span>
               {product.discount > 0 &&
@@ -52,12 +73,19 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
             <span>{product.stock} шт.</span>
             <span>{product.name}</span>
           </div>
-          <div className={'flex'}>
+          <Link to={'#'} className={'flex justify-between'}>
             <LikeButton item={product} dislikeHandler={dislikeHandler} likeHandler={likeHandler}/>
-          </div>
+            {product.author._id === user._id &&
+              <div className={'flex gap-2'}>
+                <DeleteButton deleteHandler={() => deleteProductHandler(product._id)}
+                              delReady={delReady}
+                              id={product._id}/>
+              </div>
+            }
+          </Link>
           <button className={'bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В корзину</button>
         </div>
-      </div>
+      </Link>
     );
   }
 ;
