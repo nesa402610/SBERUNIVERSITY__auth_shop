@@ -1,18 +1,13 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import {useAppSelector} from "../hooks/redux";
 
 const HomePage: FC = () => {
-  const {products, searchText} = useAppSelector(state => state.products);
-
-  const filteredProducts = useMemo(() => {
-    if (searchText) return products.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()));
-    else return products;
-  }, [products, searchText]);
+  const {products} = useAppSelector(state => state.products);
 
   return (
     <div className={'m-4'}>
       <div className={'grid grid-cols-5 gap-4'}>
-        {filteredProducts.map(item =>
+        {products.map(item =>
           <div key={item._id} className={'relative bg-neutral-800 p-4 flex flex-col gap-2'}>
             <img src={item.pictures} alt=""/>
             {item.discount > 0 &&
@@ -39,11 +34,9 @@ const HomePage: FC = () => {
           </div>
         )}
       </div>
-      {/*Сообщение мол ничего нет или нужна авторизация*/}
+      {/*Сообщение, мол нужна авторизация*/}
       {!localStorage.getItem('token')
-        ? <h2 className={'text-center text-2xl font-bold'}>Требуется авторизация</h2>
-        : filteredProducts.length === 0 &&
-        <h2 className={'text-center text-2xl font-bold'}>По вашему запросу ничего не найдено..</h2>
+        && <h2 className={'text-center text-2xl font-bold'}>Требуется авторизация</h2>
       }
     </div>
   );
