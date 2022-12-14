@@ -2,8 +2,10 @@ import React, {useMemo, useState} from 'react';
 import {useAppSelector} from "../hooks/redux";
 import SortBox from "../components /products/sortBox";
 import ProductCard from "../components /products/productCard";
+import AddNewProductModal from "../components /products/addNewProduct__modal";
 
 const ProductsPage = () => {
+  const [isModal, setIsModal] = useState<boolean>(false);
   const {products, searchText} = useAppSelector(state => state.products)
   const [sort, setSort] = useState('popular');
   const filteredProducts = useMemo(() => {
@@ -36,22 +38,24 @@ const ProductsPage = () => {
   }, [products, searchText, sort]);
   return (
     <div className={'m-4'}>
-      <div>
-        <SortBox sort={sort} setSort={setSort}/>
-        {searchText &&
-          <h2 className={'text-center text-2xl'}>
-            По запросу
-            <span className={'font-bold'}>&nbsp;{searchText}&nbsp;</span>
-            найдено {filteredProducts.length} совпадений
-          </h2>
-        }
-      </div>
+      <AddNewProductModal isModal={isModal} setIsModal={setIsModal}/>
+      <SortBox sort={sort} setSort={setSort}/>
+      {searchText &&
+        <h2 className={'text-center text-2xl'}>
+          По запросу
+          <span className={'font-bold'}>&nbsp;{searchText}&nbsp;</span>
+          найдено {filteredProducts.length} совпадений
+        </h2>
+      }
       <div className={'grid grid-cols-5 gap-4 mt-4'}>
+        <div className={'bg-neutral-800 p-4'} onClick={() => setIsModal(true)}>
+          <h2>Добавить новый продукт</h2>
+        </div>
         {filteredProducts.map(item =>
           <ProductCard key={item._id} product={item}/>
         )}
       </div>
-      {/*Сообщение мол ничего нет или нужна авторизация*/}
+      {/*Сообщение мол, ничего нет или нужна авторизация*/}
       {!localStorage.getItem('token')
         ? <h2 className={'text-center text-2xl font-bold'}>Требуется авторизация</h2>
         : filteredProducts.length === 0 &&
