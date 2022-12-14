@@ -43,17 +43,17 @@ const ProductDetails = () => {
   return (
     <div className={'m-4'}>
       <div className={'flex gap-4'}>
-        <div className={'flex basis-1/3'}>
+        <div className={'flex basis-1/3 rounded-lg overflow-hidden'}>
           <img src={product?.pictures} alt=""/>
         </div>
-        <div>
+        <div className={'rounded-xl bg-neutral-700 flex-1 p-4'}>
           <h2>{product?.name}</h2>
           <h3>{product?.description}</h3>
           <h2>{product?.price}</h2>
         </div>
       </div>
-      <div className={'bg-neutral-800 p-4 flex mt-4 flex-col gap-4'}>
-        <div className={'flex flex-col bg-neutral-700 p-2 gap-2'}>
+      <div className={'rounded-xl bg-neutral-800 p-4 flex mt-4 flex-col gap-4'}>
+        <div className={'flex rounded-xl flex-col bg-neutral-700 p-2 gap-2'}>
           <span>Оставить отзыв</span>
           <select onChange={e => setRating({...rating, rating: +e.target.value})} className={'bg-neutral-800 '}
           >
@@ -65,12 +65,12 @@ const ProductDetails = () => {
           </select>
           <input type="text"
                  className={'bg-neutral-800 py-2 px-4'}
-                 onKeyDown={e => e.key === 'Enter' && addReviewHandler(e)}
+                 onKeyDown={e => e.key === 'Enter' && addReviewHandler()}
                  onChange={e => setRating({...rating, text: e.target.value})}
                  placeholder={'Новый отзыв'}/>
         </div>
         {product?.reviews?.map((r: IProductReviews) =>
-          <div key={r._id} className={'bg-neutral-700 p-2 relative'}>
+          <div key={r._id} className={'rounded-lg bg-neutral-700 p-2 relative'}>
             {r.author === user._id &&
               <div className={'absolute right-2 cursor-pointer'}
                    onClick={() => removeReviewHandler(product._id, r._id)}>
