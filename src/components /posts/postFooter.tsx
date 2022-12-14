@@ -1,5 +1,4 @@
 import React, {FC, useState} from 'react';
-import {AiTwotoneDelete, AiTwotoneEdit} from "react-icons/ai";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {IPost} from "../../types";
 import {api} from "../../APIs/API";
@@ -10,6 +9,8 @@ import {
   showNotification__SUCCESS
 } from "../../store/reducers/notificationSlice";
 import LikeButton from "../likeButton";
+import EditButton from "../editButton";
+import DeleteButton from "../deleteButton";
 
 interface PostFooterProps {
   post: IPost
@@ -65,17 +66,11 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
         {post.tags.map(t => <span key={t}>{t}&nbsp;</span>)}
       </div>
       <div className={'flex gap-4 justify-between'}>
-        <LikeButton item={post} likeHandler={likePostHandler} dislikeHandler={dislikePostHandler} />
+        <LikeButton item={post} likeHandler={likePostHandler} dislikeHandler={dislikePostHandler}/>
         {post.author._id === user._id &&
           <div className={'flex gap-4 items-center text-xl'}>
-            <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-                 onClick={() => setIsEdit(true)}>
-              <AiTwotoneEdit/>
-            </div>
-            <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-                 onClick={() => deletePostHandler(post._id)}>
-              <AiTwotoneDelete className={(delReady ? 'text-red-600' : 'text-neutral-400') + ' transition-all'}/>
-            </div>
+            <EditButton setIsEdit={setIsEdit}/>
+            <DeleteButton id={post._id} deleteHandler={deletePostHandler} delReady={delReady}/>
           </div>
         }
       </div>
