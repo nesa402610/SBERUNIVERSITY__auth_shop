@@ -41,19 +41,13 @@ const postsSlice = createSlice({
     addLike(state, action) {
       state.posts.map(p => {
         return p._id === action.payload.postID
-          ?
-          p.likes.push(action.payload.userID)
-          :
-          p
+          ? p.likes.push(action.payload.userID) : p
       })
     },
     disLike(state, action) {
       state.posts.map(p => {
         return p._id === action.payload.postID
-          ?
-          p.likes = p.likes.filter((l: any) => l !== action.payload.userID)
-          :
-          p
+          ? p.likes = p.likes.filter((l: any) => l !== action.payload.userID) : p
       })
     },
   },
