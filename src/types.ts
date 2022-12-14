@@ -17,7 +17,7 @@ export interface IProduct {
   updated_at?: string
   __v?: number
 }
-interface IProductReviews {
+export interface IProductReviews {
   author: string
   product: string
   rating: number
