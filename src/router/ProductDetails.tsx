@@ -42,8 +42,8 @@ const ProductDetails = () => {
 
   return (
     <div className={'m-4'}>
-      <div className={'flex gap-4'}>
-        <div className={'flex basis-1/3 rounded-lg overflow-hidden'}>
+      <div className={'flex gap-4 xs:flex-col sm:flex-row'}>
+        <div className={'flex sm:basis-1/3 rounded-lg overflow-hidden'}>
           <img src={product?.pictures} alt=""/>
         </div>
         <div className={'rounded-xl bg-neutral-700 flex-1 p-4'}>
@@ -69,27 +69,29 @@ const ProductDetails = () => {
                  onChange={e => setRating({...rating, text: e.target.value})}
                  placeholder={'Новый отзыв'}/>
         </div>
-        {product?.reviews?.map((r: IProductReviews) =>
-          <div key={r._id} className={'rounded-lg bg-neutral-700 p-2 relative'}>
-            {r.author === user._id &&
-              <div className={'absolute right-2 cursor-pointer'}
-                   onClick={() => removeReviewHandler(product._id, r._id)}>
-                <FaTrashAlt className={'hover:text-red-500 transition-colors'}/>
+        <div className={'grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'}>
+          {product?.reviews?.map((r: IProductReviews) =>
+            <div key={r._id} className={'rounded-lg bg-neutral-700 p-2 relative'}>
+              {r.author === user._id &&
+                <div className={'absolute right-2 cursor-pointer'}
+                     onClick={() => removeReviewHandler(product._id, r._id)}>
+                  <FaTrashAlt className={'hover:text-red-500 transition-colors'}/>
+                </div>
+              }
+              <div className={'flex gap-4'}>
+                {/*<span>{r.author}</span>*/}
+                {/*<span>Типо имя автора</span>*/}
               </div>
-            }
-            <div className={'flex gap-4'}>
-              {/*<span>{r.author}</span>*/}
-              {/*<span>Типо имя автора</span>*/}
+              <div className={'flex'}>
+                {[...Array(r?.rating)]?.map(() => <AiFillStar/>)}
+                {[...Array(5 - r?.rating)]?.map(() => <AiOutlineStar/>)}
+              </div>
+              <div className={'max-h-[100px] overflow-scroll'}>
+                {r.text}
+              </div>
             </div>
-            <div className={'flex'}>
-              {[...Array(r?.rating)]?.map(() => <AiFillStar/>)}
-              {[...Array(5 - r?.rating)]?.map(() => <AiOutlineStar/>)}
-            </div>
-            <div className={'max-h-[100px] overflow-scroll'}>
-              {r.text}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

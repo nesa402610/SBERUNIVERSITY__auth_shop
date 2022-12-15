@@ -24,7 +24,7 @@ const PostsPage: FC = () => {
       <ImagePreviewModal isModal={isModal} setIsModal={setIsModal} image={imagePreview}/>
       <div className={'m-4'}>
         <PostCreate/>
-        <div className={'grid grid-cols-3 gap-4'}>
+        <div className={'grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'}>
           {posts.map(p =>
             <PostCard key={p._id} post={p} handler={imagePreviewHandler}/>
           )}

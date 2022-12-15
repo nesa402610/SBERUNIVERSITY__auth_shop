@@ -52,7 +52,7 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
       }
     }
     return (
-      <Link className={'rounded-lg relative bg-neutral-800 p-4 flex flex-col gap-2'} to={product._id}>
+      <Link className={'rounded-lg relative bg-neutral-800 p-4 flex flex-col gap-2'} to={'/catalog/' + product._id}>
         <div className={'flex justify-center'}>
           <img className={'rounded-lg max-h-[250px] object-contain'} src={product.pictures} alt=""/>
         </div>
@@ -61,7 +61,8 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         }
         {product.tags.map((t) => (
             t === 'new' &&
-            <span key={t} className={'rounded-lg absolute top-2 right-2 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
+            <span key={t}
+                  className={'rounded-lg absolute top-2 right-2 bg-blue-500 text-center p-1 min-w-[40px]'}>Новинка</span>
           )
         )}
         <div className={'flex-1 flex flex-col justify-between gap-2'}>

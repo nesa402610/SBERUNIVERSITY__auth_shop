@@ -20,7 +20,7 @@ const PostCreate = () => {
   };
 
   return (
-    <div className={'flex gap-4 items-end mb-4'}>
+    <div className={'flex gap-4 mb-4 md:items-end md:flex-row xs:flex-col'}>
       <label className={'flex flex-col'}>
         Название
         <input className={'bg-neutral-700 px-4 py-2'}

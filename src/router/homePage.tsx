@@ -7,9 +7,9 @@ const HomePage: FC = () => {
 
   return (
     <div className={'m-4'}>
-      <div className={'grid grid-cols-5 gap-4'}>
+      <div className={'grid sm:grid-cols-3 md:grid-cols-5 sm:grid-cols-1 gap-4'}>
         {products.map(item =>
-          <ProductCard product={item}/>
+          <ProductCard key={item._id} product={item}/>
         )}
       </div>
       {/*Сообщение, мол нужна авторизация*/}

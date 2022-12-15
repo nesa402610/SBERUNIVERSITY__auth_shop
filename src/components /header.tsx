@@ -11,23 +11,23 @@ const Header = () => {
   const {user} = useAppSelector(state => state.auth);
 
   return (
-    <header className={'flex min-h-[56px] gap-8 justify-between text-xl px-4 py-2 bg-neutral-800'}>
-      <nav className="flex gap-4">
+    <header className={'flex min-h-[56px] xs:gap-4 md:gap-8 justify-between text-xl px-4 py-2 bg-neutral-800'}>
+      <nav className="flex xs:gap-2 xs:text-2xl md:gap-4">
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/'}>
           <MdHome/>
-          Главная
+          <span className={'xs:hidden sm:block'}>Главная</span>
         </NavLink>
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/catalog'}>
           <MdShop/>
-          Товары
+          <span className={'xs:hidden sm:block'}>Товары</span>
         </NavLink>
         <NavLink className={'hover:text-neutral-300 flex gap-1 items-center'} to={'/posts'}>
           <MdSource/>
-          Посты
+          <span className={'xs:hidden sm:block'}>Посты</span>
         </NavLink>
       </nav>
-      <div className={'flex flex-1 justify-center'}>
-        <input className={'rounded-full bg-neutral-700 w-1/2 px-4'}
+      <div className={'flex flex-1 md:justify-center'}>
+        <input className={'rounded-full xs:w-full bg-neutral-700 w-1/2 px-4'}
                type="text"
                placeholder={"Поиск..."}
                onKeyDown={e => e.key === 'Enter' ? nav('/catalog') : ''}

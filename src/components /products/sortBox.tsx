@@ -8,7 +8,7 @@ interface SortBoxProps {
 const SortBox:FC<SortBoxProps> = ({sort, setSort}) => {
   return (
     <div className={'rounded-lg bg-neutral-800 p-4 flex justify-center text-lg'}>
-      <div className={'flex gap-4'}>
+      <div className={'flex gap-4 xs:flex-wrap xs:justify-center'}>
             <span className={(sort === 'popular' ? 'text-white underline cursor-default' : 'text-neutral-300 cursor-pointer')}
                   data-sort={'popular'}
                   onClick={() => setSort('popular')}>Популярные</span>

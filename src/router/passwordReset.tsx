@@ -32,8 +32,8 @@ const PasswordReset: FC = () => {
   return (
     <div className={'h-screen'}>
       <div className={'flex justify-center h-full items-center'}>
-        <form className={'flex flex-col bg-neutral-700 p-4 gap-2'}>
-          <h1>Смена пароля</h1>
+        <form className={'flex flex-col bg-neutral-700 p-4 gap-2 rounded-lg'}>
+          <h1 className={'text-center text-lg'}>Смена пароля</h1>
           {msg?.ok && <h2>{msg.ok}</h2>}
           {msg?.err && <h2>{msg.err}</h2>}
           <label className={''}>
