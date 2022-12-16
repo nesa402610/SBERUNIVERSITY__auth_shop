@@ -8,9 +8,9 @@ import {
   showNotification__ERROR,
   showNotification__SUCCESS
 } from "../../store/reducers/notificationSlice";
-import LikeButton from "../likeButton";
-import EditButton from "../editButton";
-import DeleteButton from "../deleteButton";
+import LikeButton from "../UI/likeButton";
+import EditButton from "../UI/editButton";
+import DeleteButton from "../UI/deleteButton";
 
 interface PostFooterProps {
   post: IPost
