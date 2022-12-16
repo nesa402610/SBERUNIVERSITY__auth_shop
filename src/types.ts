@@ -46,13 +46,13 @@ export interface IPost {
   image: string
   tags: string[]
   likes: any
-  comments: IPostCommentsAuthor[]
+  comments: IPostComments[]
   isPublished?: boolean
   _id: string
   author: IUser
   created_at?: string
 }
-interface IPostCommentsAuthor {
+export interface IPostComments {
   author: string
   text: string
   _id: string
