@@ -8,13 +8,17 @@ import PostsPage from "./postsPage";
 import PasswordReset from "./passwordReset";
 import ProductsPage from "./ProductsPage";
 import ProductDetails from "./ProductDetails";
+import PostDetails from "./postDetails";
 
 const Index = () => {
   return (
     <Routes>
       <Route path={'/'} element={<HomePage/>}/>
       <Route path={'/profile'} element={<ProfilePage/>}/>
-      <Route path={'/posts'} element={<PostsPage/>}/>
+      <Route path={'/posts'} element={<Outlet/>}>
+        <Route path={''} element={<PostsPage/>}/>
+        <Route path={':postID'} element={<PostDetails/>}/>
+      </Route>
       <Route path={'/catalog'} element={<Outlet/>}>
         <Route path={''} element={<ProductsPage/>}/>
         <Route path={':productID'} element={<ProductDetails/>}/>
