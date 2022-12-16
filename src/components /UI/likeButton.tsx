@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
-import {useAppSelector} from "../hooks/redux";
+import {useAppSelector} from "../../hooks/redux";
+
 
 interface LikeButtonProps {
   item: any
