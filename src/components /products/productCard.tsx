@@ -1,12 +1,12 @@
 import React, {FC, useState} from 'react';
 import {IProduct} from "../../types";
-import LikeButton from "../likeButton";
 import {api} from "../../APIs/API";
 import {addLike, deleteProduct, disLike} from "../../store/reducers/productsSlice";
 import {showNotification, showNotification__ERROR} from "../../store/reducers/notificationSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Link} from "react-router-dom";
-import DeleteButton from "../deleteButton";
+import LikeButton from "../UI/likeButton";
+import DeleteButton from "../UI/deleteButton";
 
 interface ProductCardProps {
   product: IProduct
