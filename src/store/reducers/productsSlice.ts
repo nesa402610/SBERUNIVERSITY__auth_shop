@@ -31,35 +31,22 @@ const productsSlice = createSlice({
     },
     addReview(state, action) {
       state.products = state.products.filter(p => p._id === action.payload.productID ?
-        p.reviews = action.payload.reviews
-        :
-        p
+        p.reviews = action.payload.reviews : p
       )
     },
     removeReview(state, action) {
       state.products = state.products.filter(p => p._id === action.payload.productID ?
-        p.reviews = p.reviews.filter(r => r._id !== action.payload.reviewID)
-        :
-        p
+        p.reviews = p.reviews.filter(r => r._id !== action.payload.reviewID) : p
       )
     },
     addLike(state, action) {
-      state.products.map(p => {
-        return p._id === action.payload.id
-          ?
-          p.likes.push(action.payload.userID)
-          :
-          p
-      })
+      state.products.map(p => p._id === action.payload.id ? p.likes.push(action.payload.userID) : p
+      )
     },
     disLike(state, action) {
-      state.products.map(p => {
-        return p._id === action.payload.id
-          ?
-          p.likes = p.likes.filter((l: any) => l !== action.payload.userID)
-          :
-          p
-      })
+      state.products.map(p =>
+        p._id === action.payload.id ? p.likes = p.likes.filter((l: any) => l !== action.payload.userID) : p
+      )
     }
   },
   extraReducers: {
