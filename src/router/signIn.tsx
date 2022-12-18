@@ -10,13 +10,17 @@ interface IData {
 }
 
 const SignIn: FC = () => {
-  const [data, setData] = useState<IData>({
+  const [data, setData] = useState<any>({
     email: '',
     password: ''
   });
+  const [fieldError, setFieldError] = useState({email: '', password: ''});
   const [msg, setMsg] = useState<any>(null);
   const signInHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (fieldError.email || fieldError.password) {
+      return
+    }
     axios.post<IData>('https://api.react-learning.ru/signin', data)
       .then(r => {
         localStorage.setItem('token', r.data.token)
@@ -36,10 +40,36 @@ const SignIn: FC = () => {
       .catch(err => setMsg({err: err.response.data.message}))
   };
 
+  const validateField = (field: string, value: string) => {
+    switch (field) {
+      case 'email':
+        if (!value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) && value.length > 0) {
+          setFieldError({...fieldError, email: 'Проверьте правильность заполнения'})
+        } else {
+          setFieldError({...fieldError, email: ''})
+        }
+        break
+      case 'password':
+        value.length < 6 && value.length > 0 ? setFieldError({
+          ...fieldError,
+          password: 'Пароль слишком короткий'
+        }) : setFieldError({...fieldError, password: ''})
+        break
+    }
+  }
+
+  function inputHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    const name = e.target.name
+    const value = e.target.value
+    setData({...data, [name]: value})
+    validateField(name, value)
+
+  }
+
   return (
     <div className={'h-screen'}>
       <div className={'flex justify-center h-full items-center'}>
-        <form className={'flex flex-col bg-neutral-700 p-4 gap-2 rounded-lg'}>
+        <form className={'flex flex-col bg-neutral-700 p-4 gap-2 rounded-lg w-[350px]'}>
           <h1 className={'text-center text-xl'}>Авторизация</h1>
           {msg?.ok && <h2>{msg.ok}</h2>}
           {msg?.err && <h2>{msg.err}</h2>}
@@ -49,7 +79,8 @@ const SignIn: FC = () => {
                    name={'email'}
                    className={'w-full p-2 bg-stone-900'}
                    value={data.email}
-                   onChange={e => setData({...data, email: e.target.value})}/>
+                   onChange={e => inputHandler(e)}/>
+            {fieldError.email && <span className={'text-red-500 text-sm'}>{fieldError.email}</span>}
           </label>
           <label className={''}>
             Пароль
@@ -57,7 +88,8 @@ const SignIn: FC = () => {
                    name={'password'}
                    className={'w-full p-2 bg-stone-900'}
                    value={data.password}
-                   onChange={e => setData({...data, password: e.target.value})}/>
+                   onChange={e => inputHandler(e)}/>
+            {fieldError.password && <span className={'text-red-500 text-sm'}>{fieldError.password}</span>}
           </label>
           <div className={'flex justify-between text-sm'}>
             <Link to={'/reset-password'} onClick={() => resetPasswordHandler()}
@@ -68,7 +100,7 @@ const SignIn: FC = () => {
               Создать аккаунт
             </Link>
           </div>
-          <button className={'bg-neutral-900 p-2 mt-2 hover:bg-neutral-800 transition-all'}
+          <button className={(fieldError.email && fieldError.password ? 'cursor-default bg-neutral-800 text-neutral-300' : 'hover:bg-neutral-800 bg-neutral-900') + ' p-2 mt-2 transition-all'}
                   onClick={e => signInHandler(e)}>
             Авторизация
           </button>
