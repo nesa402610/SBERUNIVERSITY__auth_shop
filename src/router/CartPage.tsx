@@ -3,6 +3,11 @@ import {IProduct} from "../types";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
 
+interface ICart {
+  product: IProduct
+  count: number
+}
+
 const CartPage: FC = () => {
   const {cart} = useAppSelector(state => state.cart)
   const dispatch = useAppDispatch()
@@ -15,12 +20,17 @@ const CartPage: FC = () => {
       dispatch(removeItem(id))
     } else dispatch(decrementCart(id))
   }
+  const getTotalPrice = () => {
+    let price = 0
+    cart.map((item: ICart) => price += (item.product.price * item.count * (100 - item.product.discount) / 100))
+    return price
+  }
 
   return (
     <div className={'m-4'}>
       <h1 className={'text-center text-2xl mb-4'}>Ваша корзина</h1>
       <div className={'flex flex-col gap-4'}>
-        {cart.map((item: { product: IProduct, count: number }) =>
+        {cart.map((item: ICart) =>
           <div className={'bg-neutral-700 rounded-lg p-4 flex justify-between'}>
             <div className={'flex gap-4'}>
               <div className={'w-[150px] rounded-lg overflow-hidden'}>
@@ -41,14 +51,19 @@ const CartPage: FC = () => {
                         onClick={() => decrementHandler(item.product._id, item.count)}>Убавить
                 </button>
               </div>
-              <div className={'flex gap-2'}>
-                <span className={'line-through italic text-neutral-400'}>{item.product.price} цена</span>
-                <span className={'font-bold'}>Цена {item.product.price * (100 - item.product.discount) / 100} со скидкой</span>
+              <div className={'flex flex-col gap-2'}>
+                <div className={'flex gap-2'}>
+                  <span className={'line-through italic text-neutral-400'}>{item.product.price} цена</span>
+                  <span className={'font-bold'}>Цена {item.product.price * (100 - item.product.discount) / 100} со скидкой</span>
+                </div>
+                <h2 className={'text-end text-xl border-t-2'}>Итого: <span className={'font-bold'}>{item.product.price * item.count * (100 - item.product.discount) / 100}</span> рублей
+                </h2>
               </div>
             </div>
           </div>
         )}
       </div>
+        <h3 className={'font-bold text-3xl text-end'}>Итого к оплате: {getTotalPrice()}</h3>
     </div>
   );
 };
