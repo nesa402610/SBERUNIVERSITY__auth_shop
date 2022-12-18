@@ -17,6 +17,7 @@ export interface IProduct {
   updated_at?: string
   __v?: number
 }
+
 export interface IProductReviews {
   author: string
   product: string
@@ -24,6 +25,7 @@ export interface IProductReviews {
   text: string
   _id: string
 }
+
 export interface IAuthor {
   name: string
   about: string
@@ -32,6 +34,7 @@ export interface IAuthor {
   email: string
   __v?: number
 }
+
 export interface IUser {
   name: string
   about: string | ''
@@ -40,6 +43,7 @@ export interface IUser {
   email?: string
   __v?: number
 }
+
 export interface IPost {
   title: string
   text: string
@@ -52,10 +56,16 @@ export interface IPost {
   author: IUser
   created_at?: string
 }
+
 export interface IPostComments {
   author: string
   text: string
   _id: string
   updated_at: string
   created_at: string
+}
+
+export interface ICart {
+  product: IProduct
+  count: number
 }
