@@ -10,7 +10,7 @@ interface postsSliceProps {
 
 const initialState: postsSliceProps = {
   posts: [],
-  isLoading: false,
+  isLoading: true,
   error: ''
 };
 
@@ -26,16 +26,12 @@ const postsSlice = createSlice({
     },
     updatePost(state, action) {
       state.posts = state.posts.map(p => p._id === action.payload._id ?
-        action.payload
-        :
-        p
+        action.payload : p
       )
     },
     setComments(state, action) {
       state.posts.map(p => p._id === action.payload.postID ?
-        p.comments = action.payload.comments
-        :
-        p
+        p.comments = action.payload.comments : p
       )
     },
     addLike(state, action) {

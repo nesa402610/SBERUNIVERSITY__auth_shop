@@ -6,19 +6,21 @@ import moment from "moment";
 import PostFooter from "../components /posts/postFooter";
 import PostEditModal from "../components /posts/postEdit__Modal";
 import PostComments from "../components /posts/postComments";
+import Loader from "../components /UI/Loader";
 
 
 const PostDetails: FC = () => {
   const {posts} = useAppSelector(state => state.posts)
   const {postID} = useParams()
 
-  const [post, setPost] = useState<null | IPost>(null);
+  const [post, setPost] = useState<any>(null);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     setPost(posts.filter((p: IPost) => p._id === postID)[0])
   }, [postID, posts]);
-  if (!post) return null
+  console.log(post, posts)
+  if (!post) return <Loader/>
 
   return (
     <div className={'m-4'}>
