@@ -4,13 +4,15 @@ import authSlice from "./reducers/authSlice";
 import productsSlice from "./reducers/productsSlice";
 import postSlice from "./reducers/postSlice";
 import notificationSlice from "./reducers/notificationSlice";
+import cartSlice from "./reducers/cartSlice";
 
 
 const rootReducer = combineReducers({
   auth: authSlice,
   products: productsSlice,
   posts: postSlice,
-  notification: notificationSlice
+  notification: notificationSlice,
+  cart: cartSlice
 });
 export const store = configureStore({
   reducer: rootReducer,

@@ -1,0 +1,56 @@
+import React, {FC} from 'react';
+import {IProduct} from "../types";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
+
+const CartPage: FC = () => {
+  const {cart} = useAppSelector(state => state.cart)
+  const dispatch = useAppDispatch()
+
+  const incrementHandler = (id: string) => {
+    dispatch(incrementCart(id))
+  }
+  const decrementHandler = (id: string, count: number) => {
+    if (count === 1) {
+      dispatch(removeItem(id))
+    } else dispatch(decrementCart(id))
+  }
+
+  return (
+    <div className={'m-4'}>
+      <h1 className={'text-center text-2xl mb-4'}>Ваша корзина</h1>
+      <div className={'flex flex-col gap-4'}>
+        {cart.map((item: { product: IProduct, count: number }) =>
+          <div className={'bg-neutral-700 rounded-lg p-4 flex justify-between'}>
+            <div className={'flex gap-4'}>
+              <div className={'w-[150px] rounded-lg overflow-hidden'}>
+                <img src={item.product.pictures} alt=""/>
+              </div>
+              <div>
+                <h2 className={'font-bold'}>{item.product.name}</h2>
+                <p>{item.product.description}</p>
+              </div>
+            </div>
+            <div className={'flex flex-col items-center justify-center'}>
+              <div className={'flex bg-neutral-800 rounded-lg overflow-hidden gap-2 items-center'}>
+                <button className={'p-4 rounded-none hover:bg-neutral-600 transition-all'}
+                        onClick={() => incrementHandler(item.product._id)}>Добавить
+                </button>
+                <span className={'p-4'}>{item.count} шт.</span>
+                <button className={'p-4 rounded-none hover:bg-neutral-600 transition-all'}
+                        onClick={() => decrementHandler(item.product._id, item.count)}>Убавить
+                </button>
+              </div>
+              <div className={'flex gap-2'}>
+                <span className={'line-through italic text-neutral-400'}>{item.product.price} цена</span>
+                <span className={'font-bold'}>Цена {item.product.price * (100 - item.product.discount) / 100} со скидкой</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default CartPage;

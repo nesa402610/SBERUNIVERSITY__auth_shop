@@ -8,6 +8,7 @@ import {useAppDispatch} from "./hooks/redux";
 import Notification from "./components /Notification";
 import {showNotification__AUTH} from "./store/reducers/notificationSlice";
 import {useNavigate} from "react-router-dom";
+import {setCart} from "./store/reducers/cartSlice";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,10 @@ const App = () => {
       dispatch(fetchProducts());
       // @ts-ignore
       dispatch(fetchPosts());
+      if (localStorage.getItem('cart')) {
+      // @ts-ignore
+        dispatch(setCart(JSON.parse(localStorage.getItem('cart'))))
+      }
     }
   }, []);
   return (

@@ -51,6 +51,25 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         setDelReady(true)
       }
     }
+
+    const addToCartHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault()
+      const cart = localStorage.getItem('cart')
+      if (cart) {
+        const arrCart = JSON.parse(cart)
+        if (arrCart.find((p: any) => p.product._id === product._id)) {
+          arrCart.map((i: any) => i.product._id === product._id ? i.count += 1 : i)
+        } else {
+          arrCart.push({product: product, count: 1})
+        }
+
+        localStorage.setItem('cart', JSON.stringify(arrCart))
+      } else {
+        localStorage.setItem('cart', JSON.stringify([{product: product, count: 1}]))
+      }
+
+    };
+
     return (
       <Link className={'rounded-lg relative bg-neutral-800 p-4 flex flex-col gap-2'} to={'/catalog/' + product._id}>
         <div className={'flex justify-center'}>
@@ -86,7 +105,10 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
               </div>
             }
           </Link>
-          <button className={'rounded-lg bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В корзину</button>
+          <Link to={'#'}
+                onClick={(e) => addToCartHandler(e)}
+                className={'rounded-lg text-center bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В
+                                                                                                            корзину</Link>
         </div>
       </Link>
     );

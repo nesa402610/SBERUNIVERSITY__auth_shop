@@ -9,6 +9,7 @@ import PasswordReset from "./passwordReset";
 import ProductsPage from "./ProductsPage";
 import ProductDetails from "./ProductDetails";
 import PostDetails from "./postDetails";
+import CartPage from "./CartPage";
 
 const Index = () => {
   return (
@@ -26,6 +27,7 @@ const Index = () => {
       <Route path={'/signIn'} element={<SignIn/>}/>
       <Route path={'/signUp'} element={<SignUp/>}/>
       <Route path={'/reset-password'} element={<PasswordReset/>}/>
+      <Route path={'/cart'} element={<CartPage/>}/>
     </Routes>
   );
 };
