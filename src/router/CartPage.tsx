@@ -27,10 +27,10 @@ const CartPage: FC = () => {
       <h1 className={'text-center text-2xl mb-4'}>Ваша корзина</h1>
       <div className={'flex flex-col gap-4'}>
         {cart.map((item: ICart) =>
-          <div className={'bg-neutral-700 rounded-lg p-4 flex justify-between'}>
+          <div className={'bg-neutral-700 rounded-lg p-4 flex justify-between gap-72'}>
             <div className={'flex gap-4'}>
-              <div className={'w-[150px] rounded-lg overflow-hidden'}>
-                <img src={item.product.pictures} alt=""/>
+              <div className={'min-w-[150px] rounded-lg w-[150px] h-[150px] overflow-hidden flex justify-center bg-white'}>
+                <img className={'h-full'} src={item.product.pictures} alt=""/>
               </div>
               <div>
                 <h2 className={'font-bold'}>{item.product.name}</h2>
@@ -42,7 +42,7 @@ const CartPage: FC = () => {
                 <button className={'p-4 rounded-none hover:bg-neutral-600 transition-all'}
                         onClick={() => incrementHandler(item.product._id)}>Добавить
                 </button>
-                <span className={'p-4'}>{item.count} шт.</span>
+                <span className={'p-4 whitespace-nowrap'}>{item.count} шт.</span>
                 <button className={'p-4 rounded-none hover:bg-neutral-600 transition-all'}
                         onClick={() => decrementHandler(item.product._id, item.count)}>Убавить
                 </button>
