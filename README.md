@@ -1,7 +1,6 @@
 # Финальный проект по курсам от Сбера
-
+____
 ### Stack:
-
 * React
 * React Router DOM
 * Axios
@@ -9,15 +8,14 @@
 * Typescript
 * React Icons
 * Tailwind CSS
-
+___
 ### Немного о костылях
-
 * Для авторизации используется упрощенная модель JWT, тк мы не используем refreshToken, только долгоживущий accessToken.
 * Я только изучаю TypeScript и поэтому могут быть _**ts-ignore**_ и _**any**_ там, где можно обойтись без этого, как и
   могу забыть тип записать. У меня только базовое понимание есть.
 * React Router DOM обновлен до 6.4.4, где изменился роутинг, переделывать я не стал, тк не вижу причин, ибо еще не понял
   прикола _**лоадеров**_ и _**экшенов**_
-
+___
 ### Статус выполнения
 
 1. **Задание #1**
@@ -47,10 +45,17 @@
         * [x] Лайки на товар (поставить и убрать)
         * [x] Удаление товара
         * [x] Отзывы к товарам (добавить и удалить)
-
+3. **Дополнительно от себя**
+   * [x] Индивидуальная страница поста
+   * [ ] Валидация полей ввода
+   * [x] Рабочая корзина товаров
+   * [x] Лоадер
+___
 ## [Предпросмотр](https://sberuniversity-dogfood-shop.netlify.app/)
 
-![img.png](https://sun9-east.userapi.com/sun9-18/s/v1/ig2/1fDK3wJ-I-GCv8vsU62HmzWEIrp8EPMZmLArJcen6lNf-w1RQDFzG5n7KSITGUoft8d9p9Wvp8xPiwIzb_cRHMuM.jpg?size=2560x1456&quality=96&type=album)
-
+![Продукты](https://sun9-east.userapi.com/sun9-21/s/v1/ig2/cBgYOeItYjrpJe44hyopHcwkMQZPtOH6J6p0I4REh7gKiR2OwM_IMf7egrCfXJXL_nqeeL_Rl9t3n0OU24RnP6Ap.jpg?size=2560x1452&quality=96&type=album)
+![Посты](https://sun9-east.userapi.com/sun9-74/s/v1/ig2/9hcbXLCTqrKc2N_ynda0AiPYoqEFvZSGbPOhZQLLA1U_Nzrlvvf-6AQzmwvscSmhTN8wIcBLAfuiG5bPIc2hJYLW.jpg?size=2560x1461&quality=96&type=album)
+![Корзина товаров](https://sun9-west.userapi.com/sun9-47/s/v1/ig2/o_6_rMIxiBuC6oMxOH7Nk4OxwgbqWd9inAakjjydRwuWCL-o-PEamUp7Q9q3QrtslE81r8v5UiosRMYs8BjqQkWe.jpg?size=2560x1462&quality=96&type=album)
+____
 ~~API подготовлено в рамках курса и может отвалиться в какой-то момент, поэтому тут проект может перестать работать со
 временем~~
