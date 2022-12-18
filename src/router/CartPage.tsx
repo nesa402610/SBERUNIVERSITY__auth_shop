@@ -1,12 +1,8 @@
 import React, {FC} from 'react';
-import {IProduct} from "../types";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
+import {ICart} from "../types";
 
-interface ICart {
-  product: IProduct
-  count: number
-}
 
 const CartPage: FC = () => {
   const {cart} = useAppSelector(state => state.cart)
@@ -51,10 +47,11 @@ const CartPage: FC = () => {
                         onClick={() => decrementHandler(item.product._id, item.count)}>Убавить
                 </button>
               </div>
-              <div className={'flex flex-col gap-2'}>
+              <div className={'flex flex-col gap-2 w-full'}>
                 <div className={'flex gap-2'}>
-                  <span className={'line-through italic text-neutral-400'}>{item.product.price} цена</span>
-                  <span className={'font-bold'}>Цена {item.product.price * (100 - item.product.discount) / 100} со скидкой</span>
+                  <span className={item.product.discount ? 'line-through italic text-neutral-400' : 'text-center w-full'}>{item.product.price} рублей</span>
+                  {item.product.discount !== 0 &&
+                    <span className={'font-bold'}>{item.product.price * (100 - item.product.discount) / 100} рублей со скидкой</span>}
                 </div>
                 <h2 className={'text-end text-xl border-t-2'}>Итого: <span className={'font-bold'}>{item.product.price * item.count * (100 - item.product.discount) / 100}</span> рублей
                 </h2>
@@ -63,7 +60,7 @@ const CartPage: FC = () => {
           </div>
         )}
       </div>
-        <h3 className={'font-bold text-3xl text-end'}>Итого к оплате: {getTotalPrice()}</h3>
+      <h3 className={'font-bold text-3xl text-end'}>Итого к оплате: {getTotalPrice()}</h3>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Link} from "react-router-dom";
 import LikeButton from "../UI/likeButton";
 import DeleteButton from "../UI/deleteButton";
+import {addItem} from "../../store/reducers/cartSlice";
 
 interface ProductCardProps {
   product: IProduct
@@ -61,11 +62,13 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
           arrCart.map((i: any) => i.product._id === product._id ? i.count += 1 : i)
         } else {
           arrCart.push({product: product, count: 1})
+          dispatch(addItem({product, count: 1}))
         }
 
         localStorage.setItem('cart', JSON.stringify(arrCart))
       } else {
         localStorage.setItem('cart', JSON.stringify([{product: product, count: 1}]))
+        dispatch(addItem({product, count: 1}))
       }
 
     };

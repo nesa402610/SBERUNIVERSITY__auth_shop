@@ -9,6 +9,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigate();
   const {user} = useAppSelector(state => state.auth);
+  const {cart} = useAppSelector(state => state.cart)
 
   return (
     <header className={'flex min-h-[56px] xs:gap-4 md:gap-8 justify-between text-xl px-4 py-2 bg-neutral-800'}>
@@ -35,7 +36,12 @@ const Header = () => {
         />
       </div>
       <div className={'flex gap-4 items-center'}>
-        <NavLink to={'/cart'}><RiShoppingBag3Fill className={'text-3xl text-neutral-300 hover:text-neutral-100 transition-all hover:scale-110'}/></NavLink>
+        <NavLink to={'/cart'} className={'relative'}>
+          <RiShoppingBag3Fill className={'text-3xl text-neutral-300 hover:text-neutral-100 transition-all hover:scale-110'}/>
+          {cart.length !== 0  && <div className={'absolute flex items-center justify-center text-[14px] text-neutral-100 top-0 right-0 w-4 h-4 bg-rose-800 rounded-full'}>
+            <span>{cart.length}</span>
+          </div>}
+        </NavLink>
         {localStorage.getItem('token') ?
           <NavLink className={'hover:text-neutral-300'} to={'/profile'}>
             <div className={'w-[40px] hover:scale-110 transition-all rounded-full overflow-hidden bg'}>
