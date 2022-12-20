@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {MdInfoOutline} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {hideNotification} from "../store/reducers/notificationSlice";
@@ -6,6 +6,13 @@ import {hideNotification} from "../store/reducers/notificationSlice";
 const Notification: FC = () => {
   const {message, isActive, error, closeable} = useAppSelector(state => state.notification)
   const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (closeable) {
+      setTimeout(() => {
+        dispatch(hideNotification())
+      }, 7000)
+    }
+  }, [closeable, dispatch]);
   return (
     <>
       {isActive &&
