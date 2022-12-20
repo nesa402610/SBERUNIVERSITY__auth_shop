@@ -22,7 +22,8 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
   const [delReady, setDelReady] = useState(false);
   const dispatch = useAppDispatch()
 
-  const likePostHandler = (postID: string) => {
+  const likePostHandler = (e: React.MouseEvent<HTMLDivElement>, postID: string) => {
+    e.preventDefault()
     api.likePost(postID)
       .then(() => {
         dispatch(addLike({postID, userID: user._id}))
@@ -31,7 +32,8 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
       .catch((err: any) => showNotification__ERROR(err.response.data.message))
   };
 
-  const dislikePostHandler = (postID: string) => {
+  const dislikePostHandler = (e: React.MouseEvent<HTMLDivElement>, postID: string) => {
+    e.preventDefault()
     api.dislikePost(postID).then(() => {
       dispatch(disLike({postID, userID: user._id}))
       dispatch(showNotification({message: 'Успешный дизлайк'}))
@@ -39,7 +41,8 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
       .catch((err: any) => showNotification__ERROR(err.response.data.message))
   };
 
-  const deletePostHandler = (postID: string) => {
+  const deletePostHandler = (e: React.MouseEvent<HTMLDivElement>, postID: string) => {
+    e.preventDefault()
     setTimeout(() => {
       setDelReady(false)
     }, 5000)
@@ -70,7 +73,7 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
         {post.author._id === user._id &&
           <div className={'flex gap-4 items-center text-xl'}>
             <EditButton setIsEdit={setIsEdit}/>
-            <DeleteButton id={post._id} deleteHandler={deletePostHandler} delReady={delReady}/>
+            <DeleteButton deleteHandler={deletePostHandler} delReady={delReady}/>
           </div>
         }
       </div>

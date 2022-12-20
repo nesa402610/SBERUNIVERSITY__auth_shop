@@ -18,7 +18,8 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
     const [delReady, setDelReady] = useState<boolean>(false);
     const dispatch = useAppDispatch()
 
-    const dislikeHandler = (id: string) => {
+    const dislikeHandler = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+      e.preventDefault()
       api.dislikeProduct(id).then(() => {
         dispatch(disLike({id, userID: user._id}))
         dispatch(showNotification({message: 'Успешный дизлайк'}))
@@ -26,7 +27,9 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         .catch((err: any) => showNotification__ERROR(err.response.data.message))
     };
 
-    const likeHandler = (id: string) => {
+    const likeHandler = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+      e.preventDefault()
+
       api.likeProduct(id)
         .then(() => {
           dispatch(addLike({id, userID: user._id}))
@@ -35,7 +38,9 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         .catch((err: any) => showNotification__ERROR(err.response.data.message))
     }
 
-    const deleteProductHandler = (id: string) => {
+
+    const deleteProductHandler = (e: any, id: string) => {
+      e.preventDefault()
       setTimeout(() => {
         setDelReady(false)
       }, 5000)
@@ -51,9 +56,9 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         dispatch(showNotification__ERROR('Подтвердите удаление'))
         setDelReady(true)
       }
-    }
+    };
 
-    const addToCartHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const addToCartHandler = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
       const cart = localStorage.getItem('cart')
       if (cart) {
@@ -70,7 +75,6 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         localStorage.setItem('cart', JSON.stringify([{product: product, count: 1}]))
         dispatch(addItem({product, count: 1}))
       }
-
     };
 
     return (
@@ -98,20 +102,19 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
             <span>{product.stock} шт.</span>
             <span>{product.name}</span>
           </div>
-          <Link to={'#'} className={'flex justify-between'}>
+          <div className={'flex justify-between'}>
             <LikeButton item={product} dislikeHandler={dislikeHandler} likeHandler={likeHandler}/>
             {product.author._id === user._id &&
               <div className={'flex gap-2'}>
-                <DeleteButton deleteHandler={() => deleteProductHandler(product._id)}
-                              delReady={delReady}
-                              id={product._id}/>
+                <DeleteButton deleteHandler={deleteProductHandler}
+                              delReady={delReady}/>
               </div>
             }
-          </Link>
-          <Link to={'#'}
-                onClick={(e) => addToCartHandler(e)}
-                className={'rounded-lg text-center bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В
-                                                                                                            корзину</Link>
+          </div>
+          <div onClick={(e) => addToCartHandler(e)}
+               className={'rounded-lg text-center bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В
+                                                                                                           корзину
+          </div>
         </div>
       </Link>
     );

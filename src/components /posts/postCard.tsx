@@ -8,7 +8,7 @@ import PostComments from "./postComments";
 
 interface PostCardProps {
   post: IPost
-  handler: (image: string) => void
+  handler: any
 }
 
 const PostCard: FC<PostCardProps> = ({post, handler}) => {
@@ -30,7 +30,7 @@ const PostCard: FC<PostCardProps> = ({post, handler}) => {
           <span>{post.text}</span>
           {post.image !== 'https://react-learning.ru/image-compressed/default-image.jpg' &&
             <div className={'flex rounded-lg justify-center relative overflow-hidden'}
-                 onClick={() => handler(post.image)}>
+                 onClick={(e) => handler(e, post.image)}>
               <div className={'absolute blur-2xl overflow-hidden'}>
                 <img className={'h-[600px]'} src={post.image} alt=""/>
               </div>

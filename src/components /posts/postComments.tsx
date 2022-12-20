@@ -28,7 +28,7 @@ const PostComments: FC<PostCommentsProps> = ({post, full}) => {
     }
   };
   return (
-    <div className={'rounded-lg flex flex-col gap-2 bg-neutral-800 p-2'}>
+    <div className={'rounded-lg flex flex-col gap-2 bg-neutral-800 p-2'} onClick={e => e.preventDefault()}>
       <input type="text"
              placeholder={'Комментарий...'}
              className={'rounded-lg bg-neutral-700 p-2 w-full'}

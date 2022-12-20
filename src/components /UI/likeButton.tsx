@@ -5,8 +5,8 @@ import {useAppSelector} from "../../hooks/redux";
 
 interface LikeButtonProps {
   item: any
-  dislikeHandler: (id: string) => void
-  likeHandler: (id: string) => void
+  dislikeHandler: any
+  likeHandler: any
 }
 
 const LikeButton: FC<LikeButtonProps> = ({item, dislikeHandler, likeHandler}) => {
@@ -15,13 +15,13 @@ const LikeButton: FC<LikeButtonProps> = ({item, dislikeHandler, likeHandler}) =>
     <>
       {item.likes.includes(user._id) ?
         <div className={'flex cursor-pointer gap-1 bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-             onClick={() => dislikeHandler(item._id)}>
+             onClick={(e) => dislikeHandler(e)}>
           <AiFillHeart color={'pink'} title={'Не нравится'} className={'text-xl'}/>
           <span className={'leading-none'}>{item.likes.length}</span>
         </div>
         :
         <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-             onClick={() => likeHandler(item._id)}>
+             onClick={(e) => likeHandler(e)}>
           <AiOutlineHeart title={'Нравится'} className={'text-xl'}/>
           <span className={'leading-none'}>{item.likes.length}</span>
         </div>

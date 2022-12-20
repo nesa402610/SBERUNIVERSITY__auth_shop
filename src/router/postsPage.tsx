@@ -14,7 +14,8 @@ const PostsPage: FC = () => {
 
   const [isModal, setIsModal] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
-  const imagePreviewHandler = (image: string) => {
+  const imagePreviewHandler = (e: React.MouseEvent<HTMLDivElement>, image: string) => {
+    e.preventDefault()
     setIsModal(true)
     setImagePreview(image)
   };
