@@ -4,6 +4,7 @@ import {IPost} from "../../types";
 import {api} from "../../APIs/API";
 import {setComments} from "../../store/reducers/postSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {showNotification__ERROR} from "../../store/reducers/notificationSlice";
 
 interface PostCommentProps {
   post: IPost
@@ -12,12 +13,16 @@ interface PostCommentProps {
 const PostComment: FC<PostCommentProps> = ({post}) => {
   const {user} = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
-
+//коммент удаляем, принимаем постИД и комментИД
   const deleteCommentHandler = (postID: string, commentID: string) => {
+    //вызываем из класса функцию, в нее передаем данные
     api.deleteComment(postID, commentID)
       .then((r) => {
+      //добавляем коммент в стор
         dispatch(setComments({comments: r.data.comments, postID}))
       })
+      //ошибку ловим и нотиф отображаем
+      .catch(err => showNotification__ERROR(err.response.data.message))
   };
   return (
     <>

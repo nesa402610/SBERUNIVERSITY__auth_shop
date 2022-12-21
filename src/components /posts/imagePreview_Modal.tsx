@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-
+//интерфейс модалки, isModal - отображение, setIsModal - устанавливаем модалку в true, image - ссылка на изображение
 interface ImagePreviewModalProps {
   isModal: boolean
   setIsModal: any

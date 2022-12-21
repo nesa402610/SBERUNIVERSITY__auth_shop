@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useAppDispatch} from "../../hooks/redux";
 import {addNewPost} from "../../store/reducers/postSlice";
-import {showNotification__SUCCESS} from "../../store/reducers/notificationSlice";
+import {showNotification__ERROR, showNotification__SUCCESS} from "../../store/reducers/notificationSlice";
 import {api} from "../../APIs/API";
 
 const PostCreate = () => {
@@ -16,7 +16,14 @@ const PostCreate = () => {
     api.createPost(postData).then(r => {
       dispatch(addNewPost(r.data))
       dispatch(showNotification__SUCCESS())
+      setData({
+        title: '',
+        text: '',
+        image: '',
+        tags: '',
+      })
     })
+      .catch(err => showNotification__ERROR(err.response.data.message))
   };
 
   return (
@@ -24,28 +31,30 @@ const PostCreate = () => {
       <label className={'flex flex-col'}>
         Название
         <input className={'bg-neutral-700 px-4 py-2'}
-               type="text"
+               value={data.title}
                onChange={e => setData({...data, title: e.target.value})}/>
       </label>
       <label className={'flex flex-col'}>
         Тело поста
         <input className={'bg-neutral-700 px-4 py-2'}
-               type="text"
+               value={data.text}
                onChange={e => setData({...data, text: e.target.value})}/>
       </label>
       <label className={'flex flex-col'}>
         Изображение
         <input className={'bg-neutral-700 px-4 py-2'}
-               type="text"
+               value={data.image}
                onChange={e => setData({...data, image: e.target.value})}/>
       </label>
       <label className={'flex flex-col'}>
         Тэги
         <input className={'bg-neutral-700 px-4 py-2'}
-               type="text"
+               value={data.tags}
                onChange={e => setTags(e.target.value)}/>
       </label>
-      <button onClick={e => createNewPostHandler(e)} className={'bg-neutral-700 hover:bg-neutral-500 transition-colors px-4 py-2'}>Создать</button>
+      <button onClick={e => createNewPostHandler(e)}
+              className={'bg-neutral-700 hover:bg-neutral-500 transition-colors px-4 py-2'}>Создать
+      </button>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import {api} from "../../APIs/API";
 import {setComments} from "../../store/reducers/postSlice";
 import {useAppDispatch} from "../../hooks/redux";
 import PostComment from "./postComment";
+import {showNotification__ERROR} from "../../store/reducers/notificationSlice";
 
 interface PostCommentsProps {
   post: IPost
@@ -11,20 +12,21 @@ interface PostCommentsProps {
 }
 
 const PostComments: FC<PostCommentsProps> = ({post, full}) => {
-
-
+  //коммент для добавления
   const [comment, setComment] = useState<string>('');
 
   const dispatch = useAppDispatch()
 
   const sendComment = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault()
+    //если Enter и 1 символ, отправляем, пробелы считаем
     if (e.key === 'Enter' && comment.length > 1) {
       api.createComment(post._id, {text: comment})
         .then((r) => {
           dispatch(setComments({comments: r.data.comments, postID: post._id}))
           setComment('')
         })
+        .catch(err=>showNotification__ERROR(err.response.data.message))
     }
   };
   return (
