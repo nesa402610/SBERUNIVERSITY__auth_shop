@@ -73,7 +73,7 @@ const PostFooter: FC<PostFooterProps> = ({post, setIsEdit}) => {
         {post.author._id === user._id &&
           <div className={'flex gap-4 items-center text-xl'}>
             <EditButton setIsEdit={setIsEdit}/>
-            <DeleteButton deleteHandler={deletePostHandler} delReady={delReady}/>
+            <DeleteButton id={post._id} deleteHandler={deletePostHandler} delReady={delReady}/>
           </div>
         }
       </div>

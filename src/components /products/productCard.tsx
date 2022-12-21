@@ -106,7 +106,7 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
             <LikeButton item={product} dislikeHandler={dislikeHandler} likeHandler={likeHandler}/>
             {product.author._id === user._id &&
               <div className={'flex gap-2'}>
-                <DeleteButton deleteHandler={deleteProductHandler}
+                <DeleteButton id={product._id} deleteHandler={deleteProductHandler}
                               delReady={delReady}/>
               </div>
             }
