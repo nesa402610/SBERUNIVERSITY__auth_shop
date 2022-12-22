@@ -15,13 +15,13 @@ const LikeButton: FC<LikeButtonProps> = ({item, dislikeHandler, likeHandler}) =>
     <>
       {item.likes.includes(user._id) ?
         <div className={'flex cursor-pointer gap-1 bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-             onClick={(e) => dislikeHandler(e)}>
+             onClick={(e) => dislikeHandler(e, item._id)}>
           <AiFillHeart color={'pink'} title={'Не нравится'} className={'text-xl'}/>
           <span className={'leading-none'}>{item.likes.length}</span>
         </div>
         :
         <div className={'flex gap-1 cursor-pointer bg-neutral-600 hover:bg-neutral-500 transition-all px-4 py-1 rounded-full items-center'}
-             onClick={(e) => likeHandler(e)}>
+             onClick={(e) => likeHandler(e, item._id)}>
           <AiOutlineHeart title={'Нравится'} className={'text-xl'}/>
           <span className={'leading-none'}>{item.likes.length}</span>
         </div>
