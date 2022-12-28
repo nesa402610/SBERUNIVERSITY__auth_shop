@@ -38,7 +38,7 @@ const CartPage: FC = () => {
       <div className={'flex gap-8 flex-col md:flex-row'}>
         <div className={'flex flex-1 flex-col gap-4'}>
           {cart.map((item: ICart) =>
-            <div className={'bg-neutral-700 rounded-lg p-4 flex justify-between gap-36 xs:gap-4 md:flex-row xs:flex-col'}>
+            <div key={item.product._id} className={'bg-neutral-700 rounded-lg p-4 flex justify-between gap-36 xs:gap-4 md:flex-row xs:flex-col'}>
               <div className={'flex gap-4'}>
                 <div className={'min-w-[150px] rounded-lg w-[150px] h-[150px] overflow-hidden flex justify-center bg-white'}>
                   <img className={'h-full'} src={item.product.pictures} alt=""/>
