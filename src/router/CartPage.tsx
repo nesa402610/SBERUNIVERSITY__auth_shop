@@ -3,9 +3,11 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
 import {ICart} from "../types";
 import {fetchProducts} from "../store/actions/fetchProducts";
+import Loader from "../components /UI/Loader";
 
 
 const CartPage: FC = () => {
+  const {isLoading} = useAppSelector(state => state.products)
   const [toBuy, setToBuy] = useState<string[]>([]);
   const {cart} = useAppSelector(state => state.cart)
   const dispatch = useAppDispatch()
@@ -51,7 +53,7 @@ const CartPage: FC = () => {
     // @ts-ignore доп запрос на случай обновления данных о товаре
     dispatch(fetchProducts)
   }, [dispatch]);
-
+if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>
       <h1 className={'text-center text-2xl mb-4'}> {cart.length >= 1 ? 'Ваша корзина' : ' В вашей корзине пусто'}</h1>

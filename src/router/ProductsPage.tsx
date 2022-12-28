@@ -3,10 +3,11 @@ import {useAppSelector} from "../hooks/redux";
 import SortBox from "../components /products/sortBox";
 import ProductCard from "../components /products/productCard";
 import AddNewProductModal from "../components /products/addNewProduct__modal";
+import Loader from "../components /UI/Loader";
 
 const ProductsPage = () => {
   const [isModal, setIsModal] = useState<boolean>(false);
-  const {products, searchText} = useAppSelector(state => state.products)
+  const {products, searchText, isLoading} = useAppSelector(state => state.products)
   const [sort, setSort] = useState('popular');
   const filteredProducts = useMemo(() => {
     if (searchText || sort) {
@@ -36,6 +37,7 @@ const ProductsPage = () => {
       }
     } else return products;
   }, [products, searchText, sort]);
+  if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>
       <AddNewProductModal isModal={isModal} setIsModal={setIsModal}/>

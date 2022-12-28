@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import {useAppSelector} from "../hooks/redux";
 import ProductCard from "../components /products/productCard";
+import Loader from "../components /UI/Loader";
 
 const HomePage: FC = () => {
-  const {products} = useAppSelector(state => state.products);
-
+  const {products, isLoading} = useAppSelector(state => state.products);
+  if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>
       <div className={'grid sm:grid-cols-3 md:grid-cols-5 sm:grid-cols-1 gap-4'}>

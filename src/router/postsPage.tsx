@@ -5,11 +5,12 @@ import 'moment/locale/ru'; //строчка жизни русской локал
 import PostCreate from "../components /posts/postCreate";
 import ImagePreviewModal from "../components /posts/imagePreview_Modal";
 import PostCard from "../components /posts/postCard";
+import Loader from "../components /UI/Loader";
 
 
 const PostsPage: FC = () => {
   moment.locale('ru')
-  const {posts} = useAppSelector(state => state.posts)
+  const {posts, isLoading} = useAppSelector(state => state.posts)
 
 
   const [isModal, setIsModal] = useState<boolean>(false);
@@ -19,7 +20,7 @@ const PostsPage: FC = () => {
     setIsModal(true)
     setImagePreview(image)
   };
-
+  if (isLoading) return <Loader/>
   return (
     <>
       <ImagePreviewModal isModal={isModal} setIsModal={setIsModal} image={imagePreview}/>
