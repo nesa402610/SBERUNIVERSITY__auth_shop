@@ -3,13 +3,14 @@ import {api} from "../APIs/API";
 import {updateUserData} from "../store/reducers/authSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {showNotification__ERROR, showNotification__SUCCESS} from "../store/reducers/notificationSlice";
+import Loader from "./UI/Loader";
 
 interface ProfileEditProps {
   setIsEdit: Dispatch<SetStateAction<boolean>>
 }
 
 const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
-  const {user} = useAppSelector(state => state.auth);
+  const {user, isLoading} = useAppSelector(state => state.auth);
   const [data, setData] = useState({
     avatar: user.avatar,
     name: user.name,
@@ -43,7 +44,7 @@ const ProfileEdit: FC<ProfileEditProps> = ({setIsEdit}) => {
     }
 
   };
-
+if (isLoading) return <Loader/>
   return (
     <div className={'rounded-lg flex bg-neutral-800 p-4 justify-between'}>
       <div className={'flex gap-8 xs:flex-col sm:flex-row'}>
