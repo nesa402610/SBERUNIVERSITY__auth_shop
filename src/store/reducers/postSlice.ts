@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchPosts} from "../actions/fetchPosts";
 import {IPost} from "../../types";
+import {fetchPosts} from "../actions/fetchPosts";
 
 interface postsSliceProps {
   posts: IPost[]
@@ -47,20 +47,20 @@ const postsSlice = createSlice({
       })
     },
   },
-  extraReducers: {
-    [fetchPosts.fulfilled.type]: (state, action: PayloadAction<IPost[]>) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.isLoading = false;
       state.posts = action.payload.reverse();
-    },
-    [fetchPosts.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [fetchPosts.rejected.type]: (state, action: PayloadAction<any>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    }
+
+    })
+      .addCase(fetchPosts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchPosts.rejected, (state) => {
+        state.isLoading = false;
+        state.error = 'Ошибка загрузки списка постов';
+      })
   }
 });
-
 export default postsSlice.reducer;
 export const {addLike, disLike, addNewPost, deletePost, updatePost, setComments} = postsSlice.actions;

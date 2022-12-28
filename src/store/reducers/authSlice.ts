@@ -24,19 +24,20 @@ const authSlice = createSlice({
       state.user = action.payload
     }
   },
-  extraReducers: {
-    [fetchUser.fulfilled.type]: (state, action) => {
+  extraReducers: builder => {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.isAuth = true;
       state.isLoading = false;
       state.user = action.payload;
-    },
-    [fetchUser.pending.type]: (state) => {
+    })
+      .addCase(fetchUser.pending, (state) => {
       state.isLoading = true;
-    },
-    [fetchUser.rejected.type]: (state, action) => {
+
+      })
+      .addCase(fetchUser.rejected, (state) => {
       state.isLoading = false;
-      state.error = action.payload;
-    }
+      state.error = 'Ошибки загрузки данных пользователя'
+      })
   }
 });
 

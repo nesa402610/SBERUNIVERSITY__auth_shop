@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {fetchProducts} from "../actions/fetchProducts";
 import {IProduct} from "../../types";
 
@@ -49,18 +49,18 @@ const productsSlice = createSlice({
       )
     }
   },
-  extraReducers: {
-    [fetchProducts.fulfilled.type]: (state, action: PayloadAction<IProduct[]>) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.isLoading = false;
       state.products = action.payload;
-    },
-    [fetchProducts.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [fetchProducts.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    }
+    })
+      .addCase(fetchProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchProducts.rejected, (state) => {
+        state.isLoading = false;
+        state.error = 'Ошибка получения списка продуктов';
+      })
   }
 });
 
