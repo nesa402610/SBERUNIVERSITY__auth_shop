@@ -54,7 +54,7 @@ const CartPage: FC = () => {
 
   return (
     <div className={'m-4'}>
-      <h1 className={'text-center text-2xl mb-4'}>Ваша корзина</h1>
+      <h1 className={'text-center text-2xl mb-4'}> {cart.length >= 1 ? 'Ваша корзина' : ' В вашей корзине пусто'}</h1>
       <div className={'flex gap-8 flex-col md:flex-row'}>
         <div className={'flex flex-1 flex-col gap-4'}>
           {cart.map((item: ICart) =>
