@@ -18,7 +18,7 @@ const App = () => {
       dispatch(showNotification__AUTH())
       nav('/signIn')
     } else {
-      //я не знаю что с этим делать, по гайду все четко работает и не рубгается
+      //я не знаю что с этим делать, по гайду все четко работает и не ругается, да и в доках так же описано
       // @ts-ignore
       dispatch(fetchUser());
       // @ts-ignore
@@ -26,7 +26,7 @@ const App = () => {
       // @ts-ignore
       dispatch(fetchPosts());
       if (localStorage.getItem('cart')) {
-      // @ts-ignore
+        // @ts-ignore
         dispatch(setCart(JSON.parse(localStorage.getItem('cart'))))
       }
     }
