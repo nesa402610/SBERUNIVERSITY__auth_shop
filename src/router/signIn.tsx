@@ -2,6 +2,8 @@ import React, {FC, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {api} from "../APIs/API";
+import {useAppDispatch} from "../hooks/redux";
+import {setToken} from "../store/reducers/authSlice";
 
 interface IData {
   token?: any
@@ -16,6 +18,8 @@ const SignIn: FC = () => {
   });
   const [fieldError, setFieldError] = useState({email: '', password: ''});
   const [msg, setMsg] = useState<any>(null);
+  const dispatch = useAppDispatch()
+
   const signInHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (fieldError.email || fieldError.password) {
@@ -25,6 +29,7 @@ const SignIn: FC = () => {
       .then(r => {
         localStorage.setItem('token', r.data.token)
         document.location.replace('/')
+        dispatch(setToken(r.data.token))
       })
       .catch(err => {
         setMsg({err: err.response.data.message});

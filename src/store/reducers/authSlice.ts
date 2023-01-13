@@ -7,10 +7,12 @@ interface authSliceProps {
   isAuth: boolean
   isLoading: boolean
   error: string
+  token: null | string
 }
 
 const initialState: authSliceProps = {
   user: {name: '', email: '', _id: '', about: '', avatar: ''},
+  token: null,
   isAuth: false,
   isLoading: false,
   error: ''
@@ -22,6 +24,9 @@ const authSlice = createSlice({
   reducers: {
     updateUserData(state, action: PayloadAction<IUser>) {
       state.user = action.payload
+    },
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload
     }
   },
   extraReducers: builder => {
@@ -42,4 +47,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const {updateUserData} = authSlice.actions
+export const {updateUserData, setToken} = authSlice.actions
