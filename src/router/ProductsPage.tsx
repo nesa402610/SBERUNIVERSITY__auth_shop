@@ -1,9 +1,9 @@
 import React, {useMemo, useState} from 'react';
 import {useAppSelector} from "../hooks/redux";
-import SortBox from "../components /products/sortBox";
-import ProductCard from "../components /products/productCard";
-import AddNewProductModal from "../components /products/addNewProduct__modal";
-import Loader from "../components /UI/Loader";
+import SortBox from "../components/products/sortBox";
+import ProductCard from "../components/products/productCard";
+import AddNewProductModal from "../components/products/addNewProduct__modal";
+import Loader from "../components/UI/Loader";
 
 const ProductsPage = () => {
   const [isModal, setIsModal] = useState<boolean>(false);

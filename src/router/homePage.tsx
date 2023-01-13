@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
 import {useAppSelector} from "../hooks/redux";
-import ProductCard from "../components /products/productCard";
-import Loader from "../components /UI/Loader";
+import ProductCard from "../components/products/productCard";
+import Loader from "../components/UI/Loader";
+
 
 const HomePage: FC = () => {
   const {products, isLoading} = useAppSelector(state => state.products);

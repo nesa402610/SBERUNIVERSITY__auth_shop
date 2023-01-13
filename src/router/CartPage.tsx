@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
 import {ICart} from "../types";
 import {fetchProducts} from "../store/actions/fetchProducts";
-import Loader from "../components /UI/Loader";
+import Loader from "../components/UI/Loader";
 
 
 const CartPage: FC = () => {

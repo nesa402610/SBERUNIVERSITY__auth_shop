@@ -3,10 +3,10 @@ import {IPost} from "../types";
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../hooks/redux";
 import moment from "moment";
-import PostFooter from "../components /posts/postFooter";
-import PostEditModal from "../components /posts/postEdit__Modal";
-import PostComments from "../components /posts/postComments";
-import Loader from "../components /UI/Loader";
+import PostFooter from "../components/posts/postFooter";
+import PostEditModal from "../components/posts/postEdit__Modal";
+import PostComments from "../components/posts/postComments";
+import Loader from "../components/UI/Loader";
 
 
 const PostDetails: FC = () => {

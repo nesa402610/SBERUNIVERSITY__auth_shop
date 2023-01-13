@@ -2,10 +2,10 @@ import React, {FC, useState} from 'react';
 import {useAppSelector} from "../hooks/redux";
 import moment from "moment";
 import 'moment/locale/ru'; //строчка жизни русской локали
-import PostCreate from "../components /posts/postCreate";
-import ImagePreviewModal from "../components /posts/imagePreview_Modal";
-import PostCard from "../components /posts/postCard";
-import Loader from "../components /UI/Loader";
+import PostCreate from "../components/posts/postCreate";
+import ImagePreviewModal from "../components/posts/imagePreview_Modal";
+import PostCard from "../components/posts/postCard";
+import Loader from "../components/UI/Loader";
 
 
 const PostsPage: FC = () => {

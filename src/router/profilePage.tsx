@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
-import ProfileInfo from "../components /ProfileInfo";
-import ProfileEdit from "../components /ProfileEdit";
+import ProfileInfo from "../components/ProfileInfo";
+import ProfileEdit from "../components/ProfileEdit";
 
 
 const ProfilePage: FC = () => {
