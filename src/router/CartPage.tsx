@@ -4,6 +4,7 @@ import {decrementCart, incrementCart, removeItem} from "../store/reducers/cartSl
 import {ICart} from "../types";
 import {fetchProducts} from "../store/actions/fetchProducts";
 import Loader from "../components/UI/Loader";
+import {Link} from "react-router-dom";
 
 
 const CartPage: FC = () => {
@@ -53,16 +54,21 @@ const CartPage: FC = () => {
     // @ts-ignore доп запрос на случай обновления данных о товаре
     dispatch(fetchProducts)
   }, [dispatch]);
-if (isLoading) return <Loader/>
+  if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>
-      <h1 className={'text-center text-2xl mb-4'}> {cart.length >= 1 ? 'Ваша корзина' : ' В вашей корзине пусто'}</h1>
+      <h1 className={'text-center text-2xl mb-4'}> {cart.length >= 1 ? 'Ваша корзина' : 'В вашей корзине пусто'}</h1>
+      {cart.length === 0 &&
+        <div className={'flex justify-center'}>
+          <Link className={'bg-neutral-700 p-4 text-lg hover:bg-neutral-600 rounded-lg transition-all text-center font-bold'} to={'/catalog'}>Смотреть каталог товаров</Link>
+        </div>
+      }
       <div className={'flex gap-8 flex-col md:flex-row'}>
         <div className={'flex flex-1 flex-col gap-4'}>
           {cart.map((item: ICart) =>
             <div key={item.product._id}
-                 className={'bg-neutral-700 rounded-lg p-4 flex justify-between gap-36 xs:gap-4 md:flex-row xs:flex-col'}>
-              <input type="checkbox" className={'absolute'} onChange={() => setBuyHandler(item.product._id)}/>
+                 className={'bg-neutral-700 rounded-lg p-4 relative flex justify-between gap-36 xs:gap-4 md:flex-row xs:flex-col'}>
+              <input type="checkbox" className={'absolute right-0 mr-4'} onChange={() => setBuyHandler(item.product._id)}/>
               <div className={'flex gap-4'}>
                 <div className={'min-w-[150px] rounded-lg w-[150px] h-[150px] overflow-hidden flex justify-center bg-white'}>
                   <img className={'h-full'} src={item.product.pictures} alt=""/>
