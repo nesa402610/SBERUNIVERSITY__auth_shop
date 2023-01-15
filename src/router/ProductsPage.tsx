@@ -1,42 +1,50 @@
-import React, {useMemo, useState} from 'react';
-import {useAppSelector} from "../hooks/redux";
+import React, {useEffect, useMemo, useState} from 'react';
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import SortBox from "../components/products/sortBox";
 import ProductCard from "../components/products/productCard";
 import AddNewProductModal from "../components/products/addNewProduct__modal";
 import Loader from "../components/UI/Loader";
+import {fetchProducts} from "../store/actions/fetchProducts";
 
 const ProductsPage = () => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const {products, searchText, isLoading} = useAppSelector(state => state.products)
   const [sort, setSort] = useState('popular');
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(fetchProducts(searchText))
+    console.log(searchText)
+  }, [dispatch, searchText]);
+
   const filteredProducts = useMemo(() => {
-    if (searchText || sort) {
-      const search = products.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()));
+    if (sort) {
       switch (sort) {
         case 'news':
-          return search.filter(p => p.tags.includes('new'))
+          return products.filter(p => p.tags.includes('new'))
         case 'lowPrice':
-          return search.sort((a, b) =>
+          return products.sort((a, b) =>
             a.price - b.price
           )
         case 'highPrice':
-          return search.sort((a, b) =>
+          return products.sort((a, b) =>
             b.price - a.price
           )
         case 'mostRated':
-          return search.sort((a, b) =>
+          return products.sort((a, b) =>
             a.reviews.length - b.reviews.length
           )
         case 'sales':
-          const sales = search.filter(p => p.discount !== 0)
+          const sales = products.filter(p => p.discount !== 0)
           return sales.sort((a, b) =>
             b.discount - a.discount
           )
         default:
-          return search
+          return products
       }
     } else return products;
-  }, [products, searchText, sort]);
+  }, [products, sort]);
   if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>

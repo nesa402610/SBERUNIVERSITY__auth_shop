@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {setSearch} from "../store/reducers/productsSlice";
 import {MdHome, MdLogin, MdShop, MdSource} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {RiShoppingBag3Fill} from "react-icons/ri";
+import {useDebounce} from "../hooks/useDebounce";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigate();
   const {user} = useAppSelector(state => state.auth);
   const {cart} = useAppSelector(state => state.cart)
+  const [searchValue, setSearchValue] = useState('');
+  const debouncedValue = useDebounce(searchValue, 500)
+
+  useEffect(() => {
+    dispatch(setSearch(debouncedValue))
+  }, [debouncedValue, dispatch, searchValue]);
 
   return (
     <header className={'flex min-h-[56px] xs:gap-4 md:gap-8 justify-between text-xl px-4 py-2 bg-neutral-800'}>
@@ -32,7 +39,7 @@ const Header = () => {
                type="text"
                placeholder={"Поиск..."}
                onKeyDown={e => e.key === 'Enter' ? nav('/catalog') : ''}
-               onChange={e => dispatch(setSearch(e.target.value))}
+               onChange={e => setSearchValue(e.target.value)}
         />
       </div>
       <div className={'flex gap-4 items-center'}>
