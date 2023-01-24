@@ -19,24 +19,25 @@ const ProductsPage = () => {
   }, [dispatch, searchText]);
 
   const filteredProducts = useMemo(() => {
+    const copy = [...products]
     if (sort) {
       switch (sort) {
         case 'news':
-          return products.filter(p => p.tags.includes('new'))
+          return copy.filter(p => p.tags.includes('new'))
         case 'lowPrice':
-          return products.sort((a, b) =>
-            a.price - b.price
-          )
+          return copy.sort((a, b) =>
+           a.price - b.price
+        )
         case 'highPrice':
-          return products.sort((a, b) =>
+          return copy.sort((a, b) =>
             b.price - a.price
           )
         case 'mostRated':
-          return products.sort((a, b) =>
+          return copy.sort((a, b) =>
             a.reviews.length - b.reviews.length
           )
         case 'sales':
-          const sales = products.filter(p => p.discount !== 0)
+          const sales = copy.filter(p => p.discount !== 0)
           return sales.sort((a, b) =>
             b.discount - a.discount
           )
@@ -45,6 +46,7 @@ const ProductsPage = () => {
       }
     } else return products;
   }, [products, sort]);
+  console.log(filteredProducts)
   if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>
