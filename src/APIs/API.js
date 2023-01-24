@@ -89,6 +89,11 @@ class API {
     return axios.delete('products/review/' + data.productID + '/' + data.reviewID);
   }
 
+//получаем товар по ID
+  getProductByID(_id) {
+    return axios.get('products/' + _id);
+  }
+
 //удаляем продукт
   deleteProduct(_id) {
     return axios.delete('products/' + _id);
