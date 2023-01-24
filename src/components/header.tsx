@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {setSearch} from "../store/reducers/productsSlice";
-import {MdHome, MdLogin, MdShop, MdSource} from "react-icons/md";
+import {MdFavorite, MdHome, MdLogin, MdShop, MdSource} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {RiShoppingBag3Fill} from "react-icons/ri";
 import {useDebounce} from "../hooks/useDebounce";
@@ -43,6 +43,9 @@ const Header = () => {
         />
       </div>
       <div className={'flex gap-4 items-center'}>
+        <NavLink to={'/favourites'}>
+          <MdFavorite className={'text-3xl text-neutral-300 hover:text-neutral-100 transition-all hover:scale-110'}/>
+        </NavLink>
         <NavLink to={'/cart'} className={'relative'}>
           <RiShoppingBag3Fill className={'text-3xl text-neutral-300 hover:text-neutral-100 transition-all hover:scale-110'}/>
           {cart.length !== 0  && <div className={'absolute flex items-center justify-center text-[14px] text-neutral-100 top-0 right-0 w-4 h-4 bg-rose-800 rounded-full'}>

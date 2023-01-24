@@ -10,6 +10,7 @@ import ProductsPage from "./ProductsPage";
 import ProductDetails from "./ProductDetails";
 import PostDetails from "./postDetails";
 import CartPage from "./CartPage";
+import FavouritesPage from "./favouritesPage";
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
       <Route path={'/signUp'} element={<SignUp/>}/>
       <Route path={'/reset-password'} element={<PasswordReset/>}/>
       <Route path={'/cart'} element={<CartPage/>}/>
+      <Route path={'/favourites'} element={<FavouritesPage/>}/>
     </Routes>
   );
 };
