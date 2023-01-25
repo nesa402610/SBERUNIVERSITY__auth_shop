@@ -9,6 +9,7 @@ import Notification from "./components/Notification";
 import {showNotification__AUTH} from "./store/reducers/notificationSlice";
 import {useNavigate} from "react-router-dom";
 import {setCart} from "./store/reducers/cartSlice";
+import {setFavourite} from "./store/reducers/authSlice";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -29,8 +30,12 @@ const App = () => {
         // @ts-ignore
         dispatch(setCart(JSON.parse(localStorage.getItem('cart'))))
       }
+      if (localStorage.getItem('favs')) {
+        // @ts-ignore
+        dispatch(setFavourite(JSON.parse(localStorage.getItem('favs'))))
+      }
     }
-  }, []);
+  }, [dispatch, nav]);
   return (
     <>
       <Header/>

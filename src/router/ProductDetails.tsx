@@ -1,27 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {IProduct, IProductReviews} from "../types";
+import {ICart, IProduct, IProductReviews} from "../types";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import {api} from "../APIs/API";
 import {FaTrashAlt} from "react-icons/fa";
 import {addReview, removeReview} from "../store/reducers/productsSlice";
 import {showNotification__ERROR, showNotification__SUCCESS} from "../store/reducers/notificationSlice";
+import {addItem, decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
+import Loader from "../components/UI/Loader";
+import {addFavourite} from "../store/reducers/authSlice";
 
 const ProductDetails = () => {
-  const {products} = useAppSelector(state => state.products)
+  const {cart} = useAppSelector(state => state.cart)
   const {user} = useAppSelector(state => state.auth)
   const [rating, setRating] = useState({rating: 1, text: ''});
-  const [product, setProduct] = useState<any>({});
+  const [product, setProduct] = useState<any | IProduct>(null);
+  const [count, setCount] = useState(0);
 
   const params = useParams()
   const dispatch = useAppDispatch()
 
 
   useEffect(() => {
-    setProduct(products.filter((p: IProduct) => p._id === params.productID)[0])
-  }, [params, products]);
+    api.getProductByID(params.productID)
+      .then(r => setProduct(r.data))
+  }, [params.productID]);
 
+  useEffect(() => {
+    const item = cart.filter((cart: ICart) => cart.product?._id === product?._id)[0]
+    if (item) setCount(item.count)
+  }, [cart, product]);
 
   const addReviewHandler = () => {
     api.addReview(product._id, rating)
@@ -39,6 +48,43 @@ const ProductDetails = () => {
       })
       .catch(err => dispatch(showNotification__ERROR(err.response.data.message)))
   };
+  const incrementHandler = (e: React.MouseEvent<HTMLButtonElement>, item: IProduct) => {
+    e.preventDefault()
+    if (count < item.stock) {
+      dispatch(incrementCart(item._id))
+    }
+  }
+  const decrementHandler = (e: React.MouseEvent<HTMLButtonElement>, id: string, count: number) => {
+    e.preventDefault()
+    if (count === 1) {
+      dispatch(removeItem(id))
+    } else dispatch(decrementCart(id))
+  }
+
+  const addToCartHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    const cart = localStorage.getItem('cart')
+    if (cart) {
+      const arrCart = JSON.parse(cart)
+      if (arrCart.find((p: ICart) => p.product._id === product._id)) {
+        arrCart.map((i: ICart) => i.product._id === product._id ? i.count += 1 : i)
+      } else {
+        arrCart.push({product: product, count: 1})
+        dispatch(addItem({product, count: 1}))
+      }
+      localStorage.setItem('cart', JSON.stringify(arrCart))
+    } else {
+      localStorage.setItem('cart', JSON.stringify([{product: product, count: 1}]))
+      dispatch(addItem({product, count: 1}))
+    }
+  };
+  if (!product) {
+    return <Loader/>
+  }
+
+  const addToFavourite = () => {
+    dispatch(addFavourite(product._id))
+  };
 
   return (
     <div className={'m-4'}>
@@ -46,16 +92,41 @@ const ProductDetails = () => {
         <div className={'flex sm:basis-1/3 rounded-lg overflow-hidden'}>
           <img src={product?.pictures} alt=""/>
         </div>
-        <div className={'rounded-xl bg-neutral-700 flex-1 p-4'}>
-          <h2>{product?.name}</h2>
-          <h3>{product?.description}</h3>
-          <h2>{product?.price}</h2>
+        <div className={'flex flex-col flex-1 gap-4'}>
+          <div className={'rounded-xl bg-neutral-700 flex-1 p-4'}>
+            <h2>{product?.name}</h2>
+            <h3>{product?.description}</h3>
+            <h2>{product?.price}</h2>
+          </div>
+          {cart.filter((item: ICart) => item.product._id === product._id)[0] ?
+            <div className={'flex items-center justify-center'}>
+              <div className={'flex flex-1 bg-neutral-700 rounded-lg overflow-hidden gap-1 items-center'}>
+                <button className={(product.stock === count ? 'bg-neutral-700 cursor-default ' : '') + 'flex-1 p-2 rounded-none hover:bg-neutral-600 transition-all'}
+                        onClick={(e) => incrementHandler(e, product)}>Добавить
+                </button>
+                <span className={'p-2 whitespace-nowrap flex-1 text-center'}>{count} шт.</span>
+                <button className={'p-2 rounded-none hover:bg-neutral-600 transition-all flex-1'}
+                        onClick={(e) => decrementHandler(e, product._id, count)}>
+                  {count === 1 ? 'Удалить' : 'Убавить'}
+                </button>
+              </div>
+            </div>
+            :
+            <div onClick={(e) => addToCartHandler(e)}
+                 className={'rounded-lg text-center bg-neutral-700 p-2 hover:bg-neutral-600 transition-all'}>В
+                                                                                                             корзину
+            </div>
+          }
+          <div onClick={()=> addToFavourite()}>
+            Добавить в избранное
+          </div>
         </div>
       </div>
       <div className={'rounded-xl bg-neutral-800 p-4 flex mt-4 flex-col gap-4'}>
         <div className={'flex rounded-xl flex-col bg-neutral-700 p-2 gap-2'}>
           <span>Оставить отзыв</span>
-          <select onChange={e => setRating({...rating, rating: +e.target.value})} className={'bg-neutral-800 rounded-lg px-4 py-2'}
+          <select onChange={e => setRating({...rating, rating: +e.target.value})}
+                  className={'bg-neutral-800 rounded-lg px-4 py-2'}
           >
             <option value="1">Ужасно</option>
             <option value="2">Плохо</option>

@@ -1,5 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
-import {ICart, IProduct} from "../../types";
+import React, {FC, useState} from 'react';
+import {IProduct} from "../../types";
 import {api} from "../../APIs/API";
 import {addLike, deleteProduct, disLike} from "../../store/reducers/productsSlice";
 import {showNotification, showNotification__ERROR} from "../../store/reducers/notificationSlice";
@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Link} from "react-router-dom";
 import LikeButton from "../UI/likeButton";
 import DeleteButton from "../UI/deleteButton";
-import {addItem, decrementCart, incrementCart, removeItem} from "../../store/reducers/cartSlice";
+import AddToCart from "../addToCart";
 
 interface ProductCardProps {
   product: IProduct
@@ -16,8 +16,7 @@ interface ProductCardProps {
 const ProductCard: FC<ProductCardProps> = ({product}) => {
     const {user} = useAppSelector(state => state.auth)
     const [delReady, setDelReady] = useState<boolean>(false);
-    const {cart} = useAppSelector(state => state.cart)
-    const [count, setCount] = useState(0);
+
     const dispatch = useAppDispatch()
 
     const dislikeHandler = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
@@ -47,7 +46,6 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
         setDelReady(false)
       }, 5000)
       if (delReady) {
-
         api.deleteProduct(id)
           .then(() => {
             dispatch(deleteProduct(id))
@@ -60,41 +58,8 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
       }
     };
 
-    const incrementHandler = (e: React.MouseEvent<HTMLButtonElement>, item: IProduct) => {
-      e.preventDefault()
-      if (count < item.stock) {
-        dispatch(incrementCart(item._id))
-      }
-    }
-    const decrementHandler = (e: React.MouseEvent<HTMLButtonElement>, id: string, count: number) => {
-      e.preventDefault()
-      if (count === 1) {
-        dispatch(removeItem(id))
-      } else dispatch(decrementCart(id))
-    }
 
-    const addToCartHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-      e.preventDefault()
-      const cart = localStorage.getItem('cart')
-      if (cart) {
-        const arrCart = JSON.parse(cart)
-        if (arrCart.find((p: ICart) => p.product._id === product._id)) {
-          arrCart.map((i: ICart) => i.product._id === product._id ? i.count += 1 : i)
-        } else {
-          arrCart.push({product: product, count: 1})
-          dispatch(addItem({product, count: 1}))
-        }
 
-        localStorage.setItem('cart', JSON.stringify(arrCart))
-      } else {
-        localStorage.setItem('cart', JSON.stringify([{product: product, count: 1}]))
-        dispatch(addItem({product, count: 1}))
-      }
-    };
-    useEffect(() => {
-      const item = cart.filter((cart: ICart) => cart.product._id === product._id)[0]
-      if (item) setCount(item.count)
-    }, [cart, product._id]);
     return (
       <Link className={'rounded-lg relative bg-neutral-800 p-4 flex flex-col gap-2'} to={'/catalog/' + product._id}>
         <div className={'flex justify-center'}>
@@ -129,25 +94,7 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
               </div>
             }
           </div>
-          {cart.filter((item: ICart) => item.product._id === product._id)[0] ?
-            <div className={'flex flex-col items-center justify-center'}>
-              <div className={'flex bg-neutral-900 rounded-lg overflow-hidden gap-1 items-center'}>
-                <button className={(product.stock === count ? 'bg-neutral-700 cursor-default ' : '') + 'p-2 rounded-none hover:bg-neutral-700 transition-all'}
-                        onClick={(e) => incrementHandler(e, product)}>Добавить
-                </button>
-                <span className={'p-2 whitespace-nowrap'}>{count} шт.</span>
-                <button className={'p-2 rounded-none hover:bg-neutral-700 transition-all'}
-                        onClick={(e) => decrementHandler(e, product._id, count)}>
-                  {count === 1 ? 'Удалить' : 'Убавить'}
-                </button>
-              </div>
-            </div>
-            :
-            <div onClick={(e) => addToCartHandler(e)}
-                 className={'rounded-lg text-center bg-neutral-900 p-2 hover:bg-neutral-700 transition-all'}>В
-                                                                                                             корзину
-            </div>
-          }
+          <AddToCart product={product}/>
 
         </div>
       </Link>

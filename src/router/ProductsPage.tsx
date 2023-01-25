@@ -15,7 +15,6 @@ const ProductsPage = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchProducts(searchText))
-    console.log(searchText)
   }, [dispatch, searchText]);
 
   const filteredProducts = useMemo(() => {
@@ -46,7 +45,7 @@ const ProductsPage = () => {
       }
     } else return products;
   }, [products, sort]);
-  console.log(filteredProducts)
+
   if (isLoading) return <Loader/>
   return (
     <div className={'m-4'}>
