@@ -8,7 +8,7 @@ interface authSliceProps {
   isLoading: boolean
   error: string
   token: null | string
-  favProducts: []
+  favProducts: string[]
 }
 
 const initialState: authSliceProps = {
@@ -27,6 +27,11 @@ const authSlice = createSlice({
     addFavourite(state, action) {
       // @ts-ignore
       state.favProducts.push(action.payload)
+      localStorage.setItem('favs', JSON.stringify(state.favProducts))
+    },
+    removeFavourite(state, action) {
+      // @ts-ignore
+      state.favProducts = state.favProducts.filter(item=> item !== action.payload)
       localStorage.setItem('favs', JSON.stringify(state.favProducts))
     },
     setFavourite(state, action){
@@ -57,4 +62,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const {updateUserData, setToken, addFavourite, setFavourite} = authSlice.actions
+export const {updateUserData, setToken, addFavourite, setFavourite, removeFavourite} = authSlice.actions

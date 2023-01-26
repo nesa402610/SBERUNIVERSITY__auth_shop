@@ -9,11 +9,11 @@ import {addReview, removeReview} from "../store/reducers/productsSlice";
 import {showNotification__ERROR, showNotification__SUCCESS} from "../store/reducers/notificationSlice";
 import {addItem, decrementCart, incrementCart, removeItem} from "../store/reducers/cartSlice";
 import Loader from "../components/UI/Loader";
-import {addFavourite} from "../store/reducers/authSlice";
+import {addFavourite, removeFavourite} from "../store/reducers/authSlice";
 
 const ProductDetails = () => {
   const {cart} = useAppSelector(state => state.cart)
-  const {user} = useAppSelector(state => state.auth)
+  const {user, favProducts} = useAppSelector(state => state.auth)
   const [rating, setRating] = useState({rating: 1, text: ''});
   const [product, setProduct] = useState<any | IProduct>(null);
   const [count, setCount] = useState(0);
@@ -78,14 +78,17 @@ const ProductDetails = () => {
       dispatch(addItem({product, count: 1}))
     }
   };
+  const favouriteHandler = () => {
+    if (favProducts.includes(product._id)) {
+      dispatch(removeFavourite(product._id))
+      console.log(1)
+    } else {
+      dispatch(addFavourite(product._id))
+    }
+  };
   if (!product) {
     return <Loader/>
   }
-
-  const addToFavourite = () => {
-    dispatch(addFavourite(product._id))
-  };
-
   return (
     <div className={'m-4'}>
       <div className={'flex gap-4 xs:flex-col sm:flex-row'}>
@@ -117,8 +120,9 @@ const ProductDetails = () => {
                                                                                                              корзину
             </div>
           }
-          <div onClick={()=> addToFavourite()}>
-            Добавить в избранное
+          <div className={'bg-neutral-700 p-2 rounded-lg text-center hover:bg-neutral-600 transition-all cursor-pointer'}
+               onClick={() => favouriteHandler()}>
+            {!favProducts.includes(product._id) ? 'Добавить в избранное' : 'Удалить из избранного'}
           </div>
         </div>
       </div>
