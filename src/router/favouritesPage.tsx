@@ -14,9 +14,10 @@ const FavouritesPage = () => {
         setProducts(prev => [...prev, r.data])
       })
     }
-  }, [favProducts]);
+  }, []);
   return (
     <div className={'m-4'}>
+       {products.length === 0 && <h1 className={'text-2xl font-bold text-center'}>В избранном ничего нет</h1> }
      <div className={'grid grid-cols-4 gap-4'}>
        {products.map(item => <ProductCard product={item} key={item._id}/>)}
      </div>
